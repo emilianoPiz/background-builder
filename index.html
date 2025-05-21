@@ -40,7 +40,7 @@
         <main class="builder-main-content" role="main" aria-labelledby="main-content-heading">
             <aside class="controls-sidebar" role="region" aria-labelledby="controls-sidebar-heading">
                 <div class="sidebar-header">
-                    <h2 id="controls-sidebar-heading">CRAFT::INTERFACE</h2>
+                    <h2 id="controls-sidebar-heading">INTERFACE</h2>
                     <button id="suggestion-modal-trigger" class="suggestion-trigger-button"
                         aria-label="Show Tactical Briefing">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -56,7 +56,7 @@
                     <p class="placeholder-text">Awaiting effect module selection...</p>
                 </div>
                 <div class="control-item reset-options-container">
-                    <button id="reset-options-button" class="action-button secondary-action">
+                    <button id="reset-options-button" class="action-button secondary-action action-button--negate">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18"
                             height="18" aria-hidden="true">
                             <path
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="export-action-area">
-                    <button id="show-code-modal-button" class="action-button main-export-button"
+                    <button id="show-code-modal-button" class="action-button main-export-button action-button--accept"
                         aria-label="Extract Code Sequence">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22"
                             height="22" aria-hidden="true">
@@ -149,7 +149,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="suggestion-modal-got-it" class="action-button modal-action-button">Acknowledge</button>
+                <button id="suggestion-modal-got-it" class="action-button modal-action-button action-button--accept">Acknowledge</button>
             </div>
         </div>
     </div>
@@ -180,7 +180,7 @@
                 </div>
             </div>
             <div class="modal-footer code-modal-footer">
-                <button id="copy-code-modal-button" class="action-button modal-action-button copy-button-variant">
+                <button id="copy-code-modal-button" class="action-button modal-action-button copy-button-variant action-button--accept">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="18"
                         height="18" aria-hidden="true">
                         <path
@@ -191,43 +191,13 @@
                     <span class="copy-status-text-modal">Copy Sequence</span>
                 </button>
                 <button id="code-snippet-modal-dismiss"
-                    class="action-button secondary-action modal-action-button">Dismiss</button>
+                    class="action-button secondary-action modal-action-button action-button--info">Dismiss</button>
             </div>
         </div>
     </div>
 
 
     <div id="a11y-live-region" aria-live="polite" aria-atomic="true" class="visually-hidden"></div>
-
-    <!-- 
-        IMPORTANT: For this new HTML structure (modal-based code export) to work, 
-        you'll need to update your JavaScript, specifically:
-
-        1. In `main.js`:
-           - The `BackgroundBuilder` constructor is called with IDs for 'code-output', 
-             'export-code-button', and 'copy-code-button'. These IDs no longer exist 
-             in the main page for this direct purpose. You can pass `null` or dummy values 
-             for these if `BackgroundBuilder` doesn't use them for other critical functions.
-             Example: `new BackgroundBuilder('preview-canvas', 'controls-container', null, null, null)`
-
-        2. In `BackgroundBuilder.js`:
-           - `generateCodeSnippet()` method:
-             - It should now directly target `document.getElementById('code-output-modal')` 
-               to display the code snippet.
-             - Example: `const codeOutputElem = document.getElementById('code-output-modal'); 
-                        if(codeOutputElem) codeOutputElem.textContent = snippet;`
-           - `copySnippetToClipboard()` method:
-             - It should get the text from `document.getElementById('code-output-modal')`.
-             - UI feedback (like "Copied!") should target elements within the code snippet modal, 
-               e.g., `document.getElementById('copy-code-modal-button').querySelector('.copy-status-text-modal')`.
-           - The properties `this.codeOutput`, `this.exportButton`, `this.copyCodeButton` 
-             might become redundant or need repurposing if they were solely for the old 
-             in-page code display.
-
-        The inline JavaScript in this HTML file already calls `window.builderInstance.generateCodeSnippet()`
-        and `window.builderInstance.copySnippetToClipboard()`, assuming these methods
-        are updated to work with the new modal elements.
-    -->
 
     <footer class="site-footer" role="contentinfo">
         <div class="site-footer-content">
@@ -342,12 +312,14 @@
 
             copyCodeModalButton.addEventListener('click', () => {
                 if (window.builderInstance && typeof window.builderInstance.copySnippetToClipboard === 'function') {
-                    window.builderInstance.copySnippetToClipboard();
+                    window.builderInstance.copySnippetToClipboard(); // This function should ideally return true/false or a promise
 
+                    // Assume copy was successful for UI update
                     if (copyStatusTextModal) {
                         copyStatusTextModal.textContent = 'Sequence Copied!';
                         copyCodeModalButton.classList.add('copied');
                     }
+                    
                     clearTimeout(modalTimeoutId);
                     modalTimeoutId = setTimeout(() => {
                         if (copyStatusTextModal) {
@@ -355,6 +327,11 @@
                             copyCodeModalButton.classList.remove('copied');
                         }
                     }, 2500);
+                } else {
+                    if (copyStatusTextModal) {
+                         copyStatusTextModal.textContent = 'Copy Failed!'; // Indicate failure
+                    }
+                    console.error("Builder instance or copySnippetToClipboard function not found.");
                 }
             });
         }

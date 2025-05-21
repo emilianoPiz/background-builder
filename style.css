@@ -2,72 +2,90 @@
 
 :root {
     --font-display: 'Orbitron', sans-serif;
-    /* Futuristic display font */
     --font-body: 'Roboto Mono', monospace;
-    /* Monospaced for body/UI text */
     --font-code: 'VT323', monospace;
-    /* Retro code font */
 
-    /* Neon Cyberpunk Theme */
-    --color-bg-deep: #0d0221;
-    /* Deep space purple/blue */
-    --color-bg-mid: #0f052d;
-    --color-bg-light: #1f104d;
+    /* Neon Cyberpunk Theme - Refined for Luxury High-Tech */
+    --color-bg-deep: #0A011F; /* Slightly deeper, more sophisticated base */
+    --color-bg-mid: #0D0221;
+    --color-bg-light: #1A0B3D; /* Less saturated, more depth */
 
-    --color-surface: rgba(15, 5, 45, 0.65);
-    /* Dark translucent surface, slightly more alpha */
-    --color-surface-alt: rgba(25, 15, 55, 0.75);
-    /* Alt surface with more alpha */
+    --color-surface: rgba(12, 2, 30, 0.7); /* Slightly darker, more refined translucency */
+    --color-surface-alt: rgba(20, 10, 45, 0.8);
 
-    --color-neon-pink: #ff07eb;
-    --color-neon-blue: #00f2ff;
-    --color-neon-green: #00ff85;
-    --color-neon-purple: #ad00ff;
-    --color-neon-orange: #ffac00;
+    --color-neon-pink: #F007E0; /* Slightly desaturated pink for less harshness */
+    --color-neon-blue: #00D0FF; /* Slightly desaturated blue */
+    --color-neon-green: #00E870; /* Slightly desaturated green */
+    --color-neon-purple: #A000F0; /* Slightly desaturated purple */
+    --color-neon-orange: #FFA000; /* Slightly desaturated orange */
 
-    --glow-neon-pink: 0 0 5px #ff07eb, 0 0 10px #ff07eb, 0 0 15px #ff07eb, 0 0 25px #ff07eb, 0 0 35px #ff07eb80;
-    /* Adjusted glow intensity */
-    --glow-neon-blue: 0 0 5px #00f2ff, 0 0 10px #00f2ff, 0 0 15px #00f2ff, 0 0 25px #00f2ff, 0 0 35px #00f2ff80;
-    --glow-neon-green: 0 0 5px #00ff85, 0 0 10px #00ff85, 0 0 15px #00ff85, 0 0 25px #00ff85, 0 0 35px #00ff8580;
-    --glow-neon-purple: 0 0 5px #ad00ff, 0 0 10px #ad00ff, 0 0 15px #ad00ff, 0 0 25px #ad00ff, 0 0 35px #ad00ff80;
+    /* Glows - Tuned for precision */
+    --glow-neon-pink: 0 0 4px #F007E0, 0 0 8px #F007E0, 0 0 12px #F007E0, 0 0 20px #F007E0, 0 0 30px #F007E080;
+    --glow-neon-blue: 0 0 4px #00D0FF, 0 0 8px #00D0FF, 0 0 12px #00D0FF, 0 0 20px #00D0FF, 0 0 30px #00D0FF80;
+    --glow-neon-green: 0 0 4px #00E870, 0 0 8px #00E870, 0 0 12px #00E870, 0 0 20px #00E870, 0 0 30px #00E87080;
+    --glow-neon-purple: 0 0 4px #A000F0, 0 0 8px #A000F0, 0 0 12px #A000F0, 0 0 20px #A000F0, 0 0 30px #A000F080;
 
-
-    --color-text-primary: #e8e8ff;
-    /* Slightly brighter primary text */
-    --color-text-secondary: #b0b0dd;
-    /* Brighter secondary */
+    --color-text-primary: #E0E8FF; /* Maintained brightness for readability */
+    --color-text-secondary: #A8B0D0; /* Softer secondary */
     --color-text-accent: var(--color-neon-blue);
-    --color-text-placeholder: #7c7c9f;
-    /* Brighter placeholder */
+    --color-text-placeholder: #6A708F; /* Subtler placeholder */
 
-    --color-border-glow: rgba(0, 242, 255, 0.35);
-    /* Neon blue glow border - slightly stronger */
-    --color-border-subtle: rgba(173, 0, 255, 0.25);
-    /* Subtle purple border - slightly stronger */
-    --color-border-input: rgba(0, 242, 255, 0.5);
-    /* Stronger input border */
+    --color-border-glow: rgba(0, 208, 255, 0.45); /* Neon blue glow border - slightly more refined */
+    --color-border-subtle: rgba(160, 0, 240, 0.3); /* Subtle purple border - refined */
+    --color-border-input: rgba(0, 208, 255, 0.6); /* Input border, strong but clean */
+    --color-border-input-focus: var(--color-neon-pink); /* Consistent focus color */
 
-    --color-shadow-ambient: rgba(0, 0, 0, 0.6);
-    /* Darker ambient shadow */
+    --color-shadow-ambient: rgba(0, 0, 0, 0.7); /* Deeper ambient shadow for contrast */
 
-    --border-radius-sharp: 4px;
-    --border-radius-standard: 8px;
-    --border-radius-soft: 12px;
+    --border-radius-sharp: 3px; /* Sharper for high-tech */
+    --border-radius-standard: 6px;
+    --border-radius-soft: 10px;
 
     --padding-unit: 0.5rem;
-    /* Base unit for consistent spacing */
 
-    --backdrop-blur-strong: 12px;
-    /* Increased blur */
-    --backdrop-blur-light: 6px;
+    --backdrop-blur-strong: 10px; /* Slightly reduced for clarity */
+    --backdrop-blur-light: 5px;
 
-    --transition-default: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    --transition-fast: 0.15s ease-out;
+    --transition-default: 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother, faster transitions */
+    --transition-fast: 0.12s ease-out;
 
-    /* Animation Variables */
-    --animation-duration-slow: 1s;
-    --animation-duration-normal: 0.6s;
-    --animation-duration-fast: 0.3s;
+    --animation-duration-slow: 0.8s;
+    --animation-duration-normal: 0.5s;
+    --animation-duration-fast: 0.25s;
+
+    /* Added for RGBA picker slider */
+    --slider-thumb-bg: var(--color-neon-blue);
+    --slider-thumb-border: var(--color-bg-deep);
+    --slider-track-bg: rgba(255, 255, 255, 0.1);
+    --slider-track-active-bg: var(--color-neon-blue);
+
+    /* Neon Action Colors For Buttons */
+    --color-action-accept: #00E870;     /* Bright Green */
+    --color-action-negate: #F00777;     /* Bright Pink/Red */
+    --color-action-info: #00D0FF;       /* Bright Blue */
+    --color-action-secondary-dim: #A8B0D0; /* For generic secondary buttons, using text-secondary */
+
+    /* Glows for Action Buttons (base state for pulse) */
+    --glow-action-accept: 0 0 6px var(--color-action-accept), 0 0 12px var(--color-action-accept);
+    --glow-action-negate: 0 0 6px var(--color-action-negate), 0 0 12px var(--color-action-negate);
+    --glow-action-info: 0 0 6px var(--color-action-info), 0 0 12px var(--color-action-info);
+    --glow-action-secondary-dim: 0 0 5px var(--color-action-secondary-dim), 0 0 8px rgba(168, 176, 208, 0.3);
+
+    /* Pulsed Glow Intensities (for the 50% mark of the animation) */
+    --glow-action-accept-pulse: 0 0 8px var(--color-action-accept), 0 0 18px var(--color-action-accept), 0 0 28px color-mix(in srgb, var(--color-action-accept) 60%, transparent);
+    --glow-action-negate-pulse: 0 0 8px var(--color-action-negate), 0 0 18px var(--color-action-negate), 0 0 28px color-mix(in srgb, var(--color-action-negate) 60%, transparent);
+    --glow-action-info-pulse: 0 0 8px var(--color-action-info), 0 0 18px var(--color-action-info), 0 0 28px color-mix(in srgb, var(--color-action-info) 60%, transparent);
+    --glow-action-secondary-dim-pulse: 0 0 7px var(--color-action-secondary-dim), 0 0 12px var(--color-action-secondary-dim), 0 0 18px color-mix(in srgb, var(--color-action-secondary-dim) 40%, transparent);
+
+    /* Hover Glow Intensities (stronger, static glow) */
+    --glow-action-accept-hover: 0 0 7px var(--color-action-accept), 0 0 15px var(--color-action-accept), 0 0 25px color-mix(in srgb, var(--color-action-accept) 70%, transparent), inset 0 0 3px color-mix(in srgb, var(--color-action-accept) 40%, transparent);
+    --glow-action-negate-hover: 0 0 7px var(--color-action-negate), 0 0 15px var(--color-action-negate), 0 0 25px color-mix(in srgb, var(--color-action-negate) 70%, transparent), inset 0 0 3px color-mix(in srgb, var(--color-action-negate) 40%, transparent);
+    --glow-action-info-hover: 0 0 7px var(--color-action-info), 0 0 15px var(--color-action-info), 0 0 25px color-mix(in srgb, var(--color-action-info) 70%, transparent), inset 0 0 3px color-mix(in srgb, var(--color-action-info) 40%, transparent);
+    --glow-action-secondary-dim-hover: 0 0 6px var(--color-action-secondary-dim), 0 0 12px var(--color-action-secondary-dim), 0 0 20px color-mix(in srgb, var(--color-action-secondary-dim) 50%, transparent), inset 0 0 2px color-mix(in srgb, var(--color-action-secondary-dim) 30%, transparent);
+
+    /* Button Backgrounds */
+    --color-button-bg: rgba(10, 1, 31, 0.85);         /* Dark base for buttons */
+    --color-button-bg-hover: rgba(20, 5, 45, 0.92);   /* Slightly lighter on hover */
 }
 
 /* General Reset & Base Styles */
@@ -87,12 +105,11 @@ body {
     font-family: var(--font-body);
     background-color: var(--color-bg-deep);
     background-image:
-        radial-gradient(ellipse at top left, var(--color-bg-light), transparent 70%),
-        /* Adjusted gradient spread */
-        radial-gradient(ellipse at bottom right, var(--color-bg-mid), transparent 60%);
+        radial-gradient(ellipse at top left, var(--color-bg-light), transparent 75%), /* Adjusted spread for subtlety */
+        radial-gradient(ellipse at bottom right, var(--color-bg-mid), transparent 65%);
     background-attachment: fixed;
     color: var(--color-text-primary);
-    line-height: 1.7;
+    line-height: 1.65; /* Slightly adjusted for monospace body */
     font-size: 15px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -113,39 +130,31 @@ body.modal-open {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;
+    z-index: -1; /* Ensure it's behind content */
 }
 
 .scanline-overlay {
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.015), rgba(0, 255, 0, 0.008), rgba(0, 0, 255, 0.015));
-    /* Subtler RGB scanlines */
-    background-size: 100% 4px, 6px 100%;
-    /* Wider scanlines */
-    opacity: 0.15;
-    /* Slightly less opacity */
-    animation: scanlineAnim 25s linear infinite;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.08) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.01), rgba(0, 255, 0, 0.005), rgba(0, 0, 255, 0.01));
+    background-size: 100% 3px, 8px 100%; /* Thinner, crisper scanlines */
+    opacity: 0.1;
+    animation: scanlineAnim 30s linear infinite; /* Slower, more subtle animation */
 }
 
 @keyframes scanlineAnim {
     0% {
         background-position: 0 0;
     }
-
     100% {
-        background-position: 0 120px;
+        background-position: 0 150px; /* Increased for slower perceived scroll */
     }
-
-    /* Slower scroll */
 }
 
 .grid-overlay {
     background-image:
         linear-gradient(var(--color-border-subtle) 1px, transparent 1px),
         linear-gradient(90deg, var(--color-border-subtle) 1px, transparent 1px);
-    background-size: 45px 45px;
-    /* Slightly larger grid */
-    opacity: 0.08;
-    /* More subtle grid */
+    background-size: 50px 50px; /* Slightly larger, more architectural grid */
+    opacity: 0.06; /* Even more subtle */
 }
 
 
@@ -156,47 +165,34 @@ h3 {
     font-weight: 500;
     margin-bottom: calc(var(--padding-unit) * 3);
     color: var(--color-text-primary);
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 10px var(--color-neon-blue);
+    letter-spacing: 0.06em; /* Slightly increased for display font clarity */
+    text-shadow: 0 0 8px var(--color-neon-blue); /* Refined glow */
 }
 
 h1 {
-    font-size: 2.6rem;
-    animation: flickerText 6s infinite alternate;
+    font-size: 2.5rem; /* Slightly adjusted */
+    animation: flickerText 7s infinite alternate; /* Slightly slower flicker */
 }
 
-/* Adjusted size */
 h2 {
-    font-size: 1.7rem;
+    font-size: 1.65rem;
 }
 
 h3 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--color-text-accent);
+    font-weight: 400; /* Less aggressive weight for H3 */
 }
 
 @keyframes flickerText {
-
-    0%,
-    18%,
-    22%,
-    25%,
-    53%,
-    57%,
-    100% {
-        text-shadow: 0 0 5px #fff, 0 0 12px #fff, 0 0 22px var(--color-neon-blue), 0 0 32px var(--color-neon-blue), 0 0 42px var(--color-neon-blue), 0 0 55px var(--color-neon-blue), 0 0 70px var(--color-neon-blue);
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+        text-shadow: 0 0 4px #fff, 0 0 10px #fff, 0 0 18px var(--color-neon-blue), 0 0 28px var(--color-neon-blue), 0 0 38px var(--color-neon-blue), 0 0 50px var(--color-neon-blue), 0 0 65px var(--color-neon-blue);
         opacity: 1;
     }
-
-    /* Enhanced flicker */
-    20%,
-    24%,
-    55% {
-        text-shadow: 0 0 5px #fff, 0 0 10px var(--color-neon-blue);
-        opacity: 0.75;
+    20%, 24%, 55% {
+        text-shadow: 0 0 4px #fff, 0 0 8px var(--color-neon-blue);
+        opacity: 0.7;
     }
-
-    /* Keep some glow on off-flicker */
 }
 
 
@@ -204,7 +200,7 @@ h3 {
 .page-container {
     max-width: 1800px;
     margin: 0 auto;
-    padding: calc(var(--padding-unit) * 4);
+    padding: calc(var(--padding-unit) * 5); /* Increased base padding */
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -218,8 +214,7 @@ h3 {
     border-radius: var(--border-radius-standard);
     border: 1px solid var(--color-border-glow);
     box-shadow:
-        inset 0 0 18px rgba(0, 242, 255, 0.12),
-        /* Enhanced Inner glow */
+        inset 0 0 15px rgba(0, 208, 255, 0.1), /* Refined Inner glow */
         var(--glow-neon-blue);
     transition: transform var(--transition-default), box-shadow var(--transition-default);
     position: relative;
@@ -229,95 +224,84 @@ h3 {
 .neon-panel::after {
     content: '';
     position: absolute;
-    width: 12px;
-    /* Larger corner accents */
-    height: 12px;
+    width: 10px; /* Slightly smaller for sharper corners */
+    height: 10px;
     border-style: solid;
     border-color: var(--color-neon-blue);
-    opacity: 0.8;
-    /* Brighter accents */
+    opacity: 0.7;
     transition: all var(--transition-fast);
 }
 
 .neon-panel:hover::before,
 .neon-panel:hover::after {
-    width: 15px;
-    height: 15px;
-    opacity: 1;
+    width: 13px;
+    height: 13px;
+    opacity: 0.9;
 }
 
 .neon-panel::before {
-    top: -3px;
-    left: -3px;
-    border-width: 3px 0 0 3px;
-    border-top-left-radius: 3px;
+    top: -2px; /* Adjusted for new border thickness */
+    left: -2px;
+    border-width: 2px 0 0 2px; /* Thinner border for accents */
+    border-top-left-radius: var(--border-radius-sharp);
 }
 
-/* Slightly offset and thicker */
 .neon-panel::after {
-    bottom: -3px;
-    right: -3px;
-    border-width: 0 3px 3px 0;
-    border-bottom-right-radius: 3px;
+    bottom: -2px;
+    right: -2px;
+    border-width: 0 2px 2px 0;
+    border-bottom-right-radius: var(--border-radius-sharp);
 }
 
 
 /* Header */
 .app-header {
     composes: neon-panel;
-    background-color: var(--color-surface);
-    backdrop-filter: blur(var(--backdrop-blur-light));
-    border-radius: var(--border-radius-standard);
-    border: 1px solid var(--color-border-glow);
-    box-shadow: inset 0 0 18px rgba(0, 242, 255, 0.12), var(--glow-neon-blue);
-
-    padding: calc(var(--padding-unit) * 3) calc(var(--padding-unit) * 5);
+    /* background-color, backdrop-filter, border-radius, border, box-shadow inherited via composes */
+    padding: calc(var(--padding-unit) * 2.5) calc(var(--padding-unit) * 4); /* Adjusted padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: calc(var(--padding-unit) * 6);
+    margin-bottom: calc(var(--padding-unit) * 5); /* Adjusted margin */
     flex-wrap: wrap;
     z-index: 10;
     opacity: 0;
-    transform: translateY(-30px) scale(0.95);
+    transform: translateY(-25px) scale(0.97); /* Refined animation start */
     animation: powerOn var(--animation-duration-normal) var(--animation-duration-slow) ease-out forwards;
 }
 
 .app-header .logo {
     display: flex;
     align-items: center;
-    gap: calc(var(--padding-unit) * 2.5);
+    gap: calc(var(--padding-unit) * 2);
 }
 
 .app-header .logo-svg {
     color: var(--color-neon-pink);
     filter: drop-shadow(var(--glow-neon-pink));
-    animation: pulseLogo 3s infinite ease-in-out;
-    width: 48px;
-    height: 48px;
+    animation: pulseLogo 3.5s infinite ease-in-out; /* Slightly slower, smoother pulse */
+    width: 45px; /* Adjusted size */
+    height: 45px;
 }
 
 @keyframes pulseLogo {
-
-    0%,
-    100% {
+    0%, 100% {
         transform: scale(1);
         filter: drop-shadow(var(--glow-neon-pink));
     }
-
     50% {
-        transform: scale(1.1);
-        filter: drop-shadow(0 0 10px #ff07eb, 0 0 25px #ff07eb, 0 0 40px #ff07eb, 0 0 60px #ff07eb, 0 0 80px #ff07eb80);
+        transform: scale(1.08); /* Subtler scale */
+        filter: drop-shadow(0 0 8px #F007E0, 0 0 20px #F007E0, 0 0 35px #F007E0, 0 0 50px #F007E0, 0 0 70px #F007E080);
     }
 }
 
 .app-header h1 {
     font-family: var(--font-display);
-    font-size: 2.2rem;
+    font-size: 2rem; /* Adjusted */
     font-weight: 700;
     color: var(--color-text-primary);
     margin-bottom: 0;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
 }
 
@@ -327,101 +311,92 @@ h3 {
     margin-right: 0.2em;
 }
 
-
 .background-selector {
     display: flex;
     align-items: center;
-    gap: calc(var(--padding-unit) * 2);
+    gap: calc(var(--padding-unit) * 1.5);
 }
 
 .background-selector label {
     font-weight: 500;
     color: var(--color-text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem; /* Adjusted */
     text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .background-selector select {
-    padding: calc(var(--padding-unit) * 1.5) calc(var(--padding-unit) * 3);
+    padding: calc(var(--padding-unit) * 1.2) calc(var(--padding-unit) * 2.5); /* Adjusted padding */
     border: 1px solid var(--color-border-input);
     border-radius: var(--border-radius-sharp);
-    background-color: rgba(10, 2, 30, 0.85);
-    /* Slightly more opaque */
+    background-color: rgba(5, 1, 15, 0.9); /* Darker, more integrated background */
     color: var(--color-text-accent);
     font-family: var(--font-body);
-    /* Ensure body font is used */
-    font-size: 0.95rem;
-    /* Ensure text size is consistent */
-    min-width: 280px;
+    font-size: 0.9rem;
+    min-width: 260px; /* Adjusted */
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2300f2ff'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2300D0FF'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
     background-repeat: no-repeat;
-    background-position: right calc(var(--padding-unit) * 1.5) center;
-    background-size: 1.4em;
+    background-position: right calc(var(--padding-unit) * 1.2) center;
+    background-size: 1.3em;
     transition: all var(--transition-fast);
-    box-shadow: inset 0 0 8px rgba(0, 242, 255, 0.25);
-    /* Enhanced inset shadow */
+    box-shadow: inset 0 0 6px rgba(0, 208, 255, 0.2);
 }
 
 .background-selector select:hover {
     border-color: var(--color-neon-blue);
-    box-shadow: inset 0 0 12px rgba(0, 242, 255, 0.45), 0 0 12px var(--color-neon-blue);
-    /* Brighter hover */
+    box-shadow: inset 0 0 10px rgba(0, 208, 255, 0.4), 0 0 10px var(--color-neon-blue);
 }
 
 .background-selector select:focus {
     outline: none;
     border-color: var(--color-neon-blue);
-    /* Changed from pink */
-    box-shadow: inset 0 0 12px rgba(0, 242, 255, 0.45), 0 0 18px var(--color-neon-blue);
-    /* Consistent blue focus */
+    box-shadow: inset 0 0 10px rgba(0, 208, 255, 0.4), 0 0 15px var(--color-neon-blue);
 }
 
 /* Main Content Area - Animation */
 .builder-main-content {
     display: flex;
-    gap: calc(var(--padding-unit) * 5);
+    gap: calc(var(--padding-unit) * 4); /* Adjusted gap */
     flex-grow: 1;
     flex-wrap: wrap;
     z-index: 5;
     opacity: 0;
-    animation: fadeInElements var(--animation-duration-normal) calc(var(--animation-duration-slow) + 0.3s) ease-out forwards;
+    animation: fadeInElements var(--animation-duration-normal) calc(var(--animation-duration-slow) + 0.25s) ease-out forwards; /* Faster stagger */
 }
 
 .builder-main-content>* {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(15px); /* Subtler slide */
     animation: slideUpStaggered var(--animation-duration-normal) ease-out forwards;
 }
 
 .controls-sidebar {
-    animation-delay: calc(var(--animation-duration-slow) + 0.4s);
+    animation-delay: calc(var(--animation-duration-slow) + 0.3s);
 }
 
 .preview-area {
-    animation-delay: calc(var(--animation-duration-slow) + 0.55s);
+    animation-delay: calc(var(--animation-duration-slow) + 0.45s);
 }
 
 @keyframes powerOn {
     0% {
         opacity: 0;
-        transform: translateY(-30px) scale(0.95);
+        transform: translateY(-25px) scale(0.97);
         box-shadow: none;
         border-color: transparent;
     }
-
     60% {
         opacity: 0.7;
-        transform: translateY(5px) scale(1.02);
-        box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.05), 0 0 5px var(--color-neon-blue);
-        border-color: rgba(0, 242, 255, 0.1);
+        transform: translateY(3px) scale(1.01); /* Refined bounce */
+        box-shadow: inset 0 0 8px rgba(0, 208, 255, 0.05), 0 0 4px var(--color-neon-blue);
+        border-color: rgba(0, 208, 255, 0.1);
     }
-
     100% {
         opacity: 1;
         transform: translateY(0) scale(1);
-        box-shadow: inset 0 0 18px rgba(0, 242, 255, 0.12), var(--glow-neon-blue);
+        box-shadow: inset 0 0 15px rgba(0, 208, 255, 0.1), var(--glow-neon-blue);
         border-color: var(--color-border-glow);
     }
 }
@@ -442,14 +417,14 @@ h3 {
 
 /* Controls Sidebar */
 .controls-sidebar {
-    border-radius: 10px;
+    border-radius: var(--border-radius-soft); /* Softer radius for larger panel */
     composes: neon-panel;
     background-color: var(--color-surface-alt);
-    border-color: var(--color-neon-purple);
-    box-shadow: inset 0 0 18px rgba(173, 0, 255, 0.12), var(--glow-neon-purple);
+    border-color: var(--color-neon-purple); /* Keep distinct purple for controls */
+    box-shadow: inset 0 0 15px rgba(160, 0, 240, 0.12), var(--glow-neon-purple);
     flex: 1;
-    min-width: 360px;
-    padding: calc(var(--padding-unit) * 4);
+    min-width: 340px; /* Adjusted */
+    padding: calc(var(--padding-unit) * 3.5); /* Adjusted */
     align-self: flex-start;
     position: sticky;
     top: calc(var(--padding-unit) * 4);
@@ -457,7 +432,7 @@ h3 {
 
 .controls-sidebar::before,
 .controls-sidebar::after {
-    border-color: var(--color-neon-purple);
+    border-color: var(--color-neon-purple); /* Match panel glow */
 }
 
 .sidebar-header {
@@ -465,174 +440,283 @@ h3 {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--color-border-subtle);
-    padding-bottom: calc(var(--padding-unit) * 2.5);
-    margin-bottom: calc(var(--padding-unit) * 4);
+    padding-bottom: calc(var(--padding-unit) * 2);
+    margin-bottom: calc(var(--padding-unit) * 3.5);
 }
 
 .controls-sidebar h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem; /* Adjusted */
     color: var(--color-text-primary);
     margin-bottom: 0;
-    text-shadow: 0 0 8px var(--color-neon-purple);
+    text-shadow: 0 0 7px var(--color-neon-purple);
 }
 
 .placeholder-text {
     color: var(--color-text-placeholder);
-    font-style: normal;
+    font-style: normal; /* More direct */
     text-align: center;
-    margin-top: calc(var(--padding-unit) * 5);
-    font-size: 0.9rem;
-    padding: calc(var(--padding-unit) * 3);
-    background: rgba(0, 0, 0, 0.25);
-    /* Slightly darker placeholder bg */
+    margin-top: calc(var(--padding-unit) * 4);
+    font-size: 0.85rem;
+    padding: calc(var(--padding-unit) * 2.5);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: var(--border-radius-standard);
     border: 1px dashed var(--color-border-subtle);
 }
 
 /* Control Item Styling */
 .control-item {
-    margin-bottom: calc(var(--padding-unit) * 3.5);
+    margin-bottom: calc(var(--padding-unit) * 3);
 }
 
 .control-item label {
     display: block;
-    margin-bottom: var(--padding-unit);
-    font-weight: 500;
-    font-size: 0.85rem;
+    margin-bottom: calc(var(--padding-unit) * 1.2); /* More space */
+    font-weight: 400; /* Lighter weight for label */
+    font-size: 0.8rem;
     color: var(--color-text-secondary);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.07em;
     word-break: break-word;
-    /* Allow long labels to wrap */
-    line-height: 1.4;
-    /* Ensure wrapped labels have good spacing */
+    line-height: 1.3;
 }
 
 .control-item input[type="text"],
 .control-item input[type="number"],
 .control-item select {
     width: 100%;
-    padding: calc(var(--padding-unit) * 1.5) calc(var(--padding-unit) * 2.5);
+    padding: calc(var(--padding-unit) * 1.3) calc(var(--padding-unit) * 2); /* Fine-tuned padding */
     border: 1px solid var(--color-border-input);
     border-radius: var(--border-radius-sharp);
-    background-color: rgba(10, 2, 30, 0.85);
+    background-color: rgba(5, 1, 15, 0.9); /* Consistent dark input bg */
     color: var(--color-text-accent);
     font-family: var(--font-body);
-    font-size: 0.95rem;
+    font-size: 0.9rem; /* Standardized input text size */
     transition: all var(--transition-fast);
-    box-shadow: inset 0 0 8px rgba(0, 242, 255, 0.2);
-    /* Slightly stronger inset */
+    box-shadow: inset 0 0 6px rgba(0, 208, 255, 0.15);
 }
 
 .control-item input[type="text"]:hover,
 .control-item input[type="number"]:hover,
 .control-item select:hover {
     border-color: var(--color-neon-blue);
-    box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.35), 0 0 10px var(--color-neon-blue);
+    box-shadow: inset 0 0 8px rgba(0, 208, 255, 0.3), 0 0 8px var(--color-neon-blue);
 }
 
-.control-item input[type="color"] {
+.control-item input[type="color"] { /* This is the standalone color input */
     width: 100%;
-    padding: 0;
-    height: calc(3em + 2 * var(--padding-unit));
+    padding: 0; /* Remove padding for wrapper */
+    height: calc(2.8em + 2 * var(--padding-unit)); /* Adjusted height */
     border: 1px solid var(--color-border-input);
     border-radius: var(--border-radius-sharp);
-    background-color: transparent;
+    background-color: transparent; /* Swatch will show color */
     cursor: pointer;
     transition: all var(--transition-fast);
+    box-shadow: inset 0 0 6px rgba(0, 208, 255, 0.15);
 }
-
 .control-item input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 5px;
+    padding: 4px; /* Slightly less padding */
     border-radius: var(--border-radius-sharp);
 }
-
 .control-item input[type="color"]::-webkit-color-swatch {
     border: none;
-    border-radius: 2px;
+    border-radius: calc(var(--border-radius-sharp) - 2px); /* Inner radius */
 }
-
-.control-item input[type="color"]::-moz-color-swatch {
+.control-item input[type="color"]::-moz-color-swatch { /* Firefox */
     border: none;
-    border-radius: 2px;
-    padding: 5px;
+    border-radius: calc(var(--border-radius-sharp) - 2px);
+    padding: 4px;
 }
-
 .control-item input[type="color"]:hover {
     border-color: var(--color-neon-blue);
-    box-shadow: 0 0 10px var(--color-neon-blue);
-    /* Enhanced hover for color */
+    box-shadow: inset 0 0 8px rgba(0, 208, 255, 0.3), 0 0 8px var(--color-neon-blue);
 }
 
+/* FOCUS STYLES - Centralized for inputs */
 .control-item input:focus,
 .control-item select:focus,
-.control-item input[type="color"]:focus {
+.control-item input[type="color"]:focus,
+.control-item .rgba-picker-widget .rgba-color-part input[type="color"]:focus,
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]:focus {
     outline: none;
-    border-color: var(--color-neon-pink);
-    box-shadow: inset 0 0 10px rgba(255, 7, 235, 0.35), 0 0 15px var(--color-neon-pink);
-    /* Stronger focus */
+    border-color: var(--color-border-input-focus) !important; /* Ensure override */
+    box-shadow: inset 0 0 8px rgba(240, 7, 224, 0.3), 0 0 12px var(--color-neon-pink) !important; /* Ensure override */
 }
 
+
 .control-item input[type="checkbox"] {
-    margin-right: calc(var(--padding-unit) * 1.5);
+    margin-right: calc(var(--padding-unit) * 1.2);
     vertical-align: middle;
     appearance: none;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.3em; /* Slightly smaller */
+    height: 1.3em;
     border-radius: var(--border-radius-sharp);
     border: 2px solid var(--color-border-input);
-    background-color: rgba(10, 2, 30, 0.85);
+    background-color: rgba(5, 1, 15, 0.9);
     cursor: pointer;
     position: relative;
     transition: all var(--transition-fast);
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.3); /* Subtle inset */
 }
-
 .control-item input[type="checkbox"]:hover {
     border-color: var(--color-neon-blue);
-    box-shadow: 0 0 8px var(--color-neon-blue);
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.3), 0 0 6px var(--color-neon-blue);
 }
-
 .control-item input[type="checkbox"]:checked {
     background-color: var(--color-neon-pink);
     border-color: var(--color-neon-pink);
-    box-shadow: 0 0 12px var(--color-neon-pink);
-    /* Brighter checked shadow */
+    box-shadow: 0 0 10px var(--color-neon-pink);
 }
-
 .control-item input[type="checkbox"]:checked::before {
     content: '✓';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #0d0221;
-    font-size: 1em;
+    color: var(--color-bg-deep); /* High contrast checkmark */
+    font-size: 0.9em;
     font-weight: bold;
 }
-
 .control-item input[type="checkbox"]+label {
     display: inline-block;
     font-weight: normal;
     color: var(--color-text-primary);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     text-transform: none;
     letter-spacing: normal;
     cursor: pointer;
+    user-select: none; /* Prevent text selection on label click */
 }
 
 .reset-options-container {
-    margin-top: calc(var(--padding-unit) * 5);
+    margin-top: calc(var(--padding-unit) * 4);
     border-top: 1px solid var(--color-border-subtle);
-    padding-top: calc(var(--padding-unit) * 5);
+    padding-top: calc(var(--padding-unit) * 4);
 }
+
+/* === RGBA Picker Widget - LUXURY HIGH-TECH REFINEMENT === */
+.control-item .rgba-picker-widget {
+    display: flex;
+    align-items: center;
+    gap: calc(var(--padding-unit) * 1.5); /* Space between color input and alpha slider */
+    margin-top: calc(var(--padding-unit) * 0.5); /* Space below the text input (if visible) or label */
+    padding: var(--padding-unit); /* Padding for the widget box */
+    background-color: rgba(5, 1, 15, 0.5); /* Subtle background for the widget itself */
+    border: 1px solid var(--color-border-subtle); /* A very subtle border for the widget container */
+    border-radius: var(--border-radius-sharp);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.control-item .rgba-picker-widget:hover {
+    border-color: var(--color-border-input);
+}
+
+/* Color Swatch part of RGBA */
+.control-item .rgba-picker-widget .rgba-color-part {
+    flex-shrink: 0; /* Prevent shrinking */
+    width: 48px; /* Fixed width for the color swatch container */
+    height: 32px; /* Fixed height */
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--border-radius-sharp);
+    padding: 3px; /* Padding around the actual color input */
+    background-color: var(--color-bg-deep); /* Match input backgrounds */
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.4);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.control-item .rgba-picker-widget .rgba-color-part input[type="color"] {
+    width: 100%;
+    height: 100%;
+    border: none; /* Border is on the wrapper */
+    border-radius: calc(var(--border-radius-sharp) - 2px); /* Inner radius */
+    padding: 0;
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    cursor: pointer;
+    background-color: transparent; /* Actual color is rendered by browser engine here */
+}
+.control-item .rgba-picker-widget .rgba-color-part input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0; /* Handled by wrapper */
+}
+.control-item .rgba-picker-widget .rgba-color-part input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: calc(var(--border-radius-sharp) - 2px);
+}
+.control-item .rgba-picker-widget .rgba-color-part input[type="color"]::-moz-color-swatch { /* Firefox */
+    border: none;
+    border-radius: calc(var(--border-radius-sharp) - 2px);
+}
+
+/* Alpha Slider part of RGBA */
+.control-item .rgba-picker-widget .rgba-alpha-part {
+    flex-grow: 1; /* Slider takes remaining space */
+}
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"] {
+    width: 100%;
+    height: 10px; /* Height of the track */
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent; /* Transparent track background, styled below */
+    cursor: pointer;
+}
+
+/* Alpha Slider Track Styling */
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, transparent, var(--color-text-accent)); /* Visual cue for alpha */
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--border-radius-sharp);
+}
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(to right, transparent, var(--color-text-accent));
+    border: 1px solid var(--color-border-input);
+    border-radius: var(--border-radius-sharp);
+}
+
+/* Alpha Slider Thumb Styling */
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -7px; /* ( (thumb_height - track_height) / 2 ) * -1 with border*/
+    width: 18px; /* Thumb width */
+    height: 18px; /* Thumb height */
+    background: var(--slider-thumb-bg);
+    border: 2px solid var(--slider-thumb-border);
+    border-radius: 50%; /* Circular thumb */
+    box-shadow: 0 0 5px var(--slider-thumb-bg); /* Subtle glow for thumb */
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]::-moz-range-thumb {
+    width: 14px; /* Moz thumb is typically smaller if border is part of it */
+    height: 14px;
+    background: var(--slider-thumb-bg);
+    border: 2px solid var(--slider-thumb-border);
+    border-radius: 50%;
+    box-shadow: 0 0 5px var(--slider-thumb-bg);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+/* Alpha Slider Hover/Active Thumb */
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]:hover::-webkit-slider-thumb,
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]:focus::-webkit-slider-thumb {
+    transform: scale(1.15);
+    box-shadow: 0 0 8px var(--slider-thumb-bg);
+}
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]:hover::-moz-range-thumb,
+.control-item .rgba-picker-widget .rgba-alpha-part input[type="range"]:focus::-moz-range-thumb {
+    transform: scale(1.15);
+    box-shadow: 0 0 8px var(--slider-thumb-bg);
+}
+/* === END RGBA Picker Widget === */
 
 
 /* Preview Area */
 .preview-area {
     composes: neon-panel;
     flex: 2.8;
-    min-width: 450px;
-    padding: calc(var(--padding-unit) * 4);
+    min-width: 420px; /* Adjusted */
+    padding: calc(var(--padding-unit) * 3.5); /* Adjusted */
     display: flex;
     flex-direction: column;
 }
@@ -641,13 +725,13 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: calc(var(--padding-unit) * 3);
+    margin-bottom: calc(var(--padding-unit) * 2.5);
     border-bottom: 1px solid var(--color-border-subtle);
-    padding-bottom: calc(var(--padding-unit) * 2.5);
+    padding-bottom: calc(var(--padding-unit) * 2);
 }
 
 .preview-header h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem; /* Adjusted */
     color: var(--color-text-primary);
     margin-bottom: 0;
     text-shadow: var(--glow-neon-blue);
@@ -656,16 +740,15 @@ h3 {
 .canvas-wrapper {
     width: 100%;
     aspect-ratio: 16 / 9;
-    min-height: 320px;
-    max-height: 70vh;
-    border: 2px solid var(--color-border-input);
-    background-color: #05010f;
+    min-height: 300px; /* Adjusted */
+    max-height: 65vh; /* Adjusted */
+    border: 1px solid var(--color-border-input); /* Slightly thinner for sleekness */
+    background-color: #04010D; /* Darker canvas bg */
     border-radius: var(--border-radius-standard);
     overflow: hidden;
     position: relative;
     flex-grow: 1;
-    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.6), 0 0 12px rgba(0, 242, 255, 0.25);
-    /* Enhanced shadow */
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 208, 255, 0.2);
 }
 
 #preview-canvas {
@@ -685,166 +768,167 @@ h3 {
     color: var(--color-text-placeholder);
     text-align: center;
     pointer-events: none;
-    opacity: 0.7;
-    /* Slightly more visible placeholder */
+    opacity: 0.6; /* Subtler placeholder */
     transition: opacity var(--transition-default);
 }
 
 .canvas-placeholder-content svg {
-    width: 72px;
-    height: 72px;
-    margin-bottom: calc(var(--padding-unit) * 3);
+    width: 64px; /* Adjusted */
+    height: 64px;
+    margin-bottom: calc(var(--padding-unit) * 2.5);
     stroke: var(--color-neon-blue);
-    opacity: 0.6;
-    /* Brighter icon */
-    animation: pulsePlaceholderIcon 2.5s infinite ease-in-out;
+    opacity: 0.5; /* Subtler icon */
+    animation: pulsePlaceholderIcon 3s infinite ease-in-out; /* Slower pulse */
 }
 
 @keyframes pulsePlaceholderIcon {
-
-    0%,
-    100% {
+    0%, 100% {
         transform: scale(1);
-        opacity: 0.6;
+        opacity: 0.5;
     }
-
     50% {
-        transform: scale(1.05);
-        opacity: 0.9;
+        transform: scale(1.03); /* Subtler scale */
+        opacity: 0.75;
     }
 }
 
 .canvas-placeholder-content p {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
 }
 
 .export-action-area {
-    margin-top: calc(var(--padding-unit) * 5);
-    /* Increased spacing */
+    margin-top: calc(var(--padding-unit) * 4);
     text-align: center;
 }
 
-.main-export-button {
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    padding: calc(var(--padding-unit) * 2.8) calc(var(--padding-unit) * 4.5);
-    /* Larger button */
-    font-size: 1.15rem;
-    letter-spacing: 0.07em;
-    /* More letter spacing */
-}
-
-
-/* Action Buttons */
+/* === ACTION BUTTONS - NEW PROFESSIONAL PULSE STYLE === */
 .action-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: calc(var(--padding-unit) * 1.8);
-    /* Increased gap */
-    padding: calc(var(--padding-unit) * 2) calc(var(--padding-unit) * 4);
-    border: 2px solid transparent;
+    gap: calc(var(--padding-unit) * 1.5);
+    padding: calc(var(--padding-unit) * 1.8) calc(var(--padding-unit) * 3.5);
+    border: 1px solid; /* Border color will be set by variables */
     border-radius: var(--border-radius-sharp);
     cursor: pointer;
     font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
     text-transform: uppercase;
-    letter-spacing: 0.07em;
+    letter-spacing: 0.06em;
     text-decoration: none;
-    transition: all var(--transition-fast);
+    transition: background-color var(--transition-default), transform var(--transition-fast), box-shadow var(--transition-default), border-color var(--transition-default);
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* Allow box-shadow (glow) to extend beyond borders */
+    background-color: var(--color-button-bg);
+    color: var(--color-text-primary);
+    text-shadow: 0 0 3px var(--color-text-primary);
+    border-radius: 12px ;
+
+    /* Default to info style, specific classes will override these */
+    --button-color: var(--color-action-info);
+    --button-glow: var(--glow-action-info);
+    --button-glow-pulse: var(--glow-action-info-pulse);
+    --button-glow-hover: var(--glow-action-info-hover);
+
+    border-color: color-mix(in srgb, var(--button-color) 30%, var(--color-border-subtle));
+    box-shadow: var(--button-glow);
+    animation: pulseNeonButton 2.5s infinite ease-in-out;
 }
 
-.action-button::before {
-    content: "";
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border-radius: var(--border-radius-sharp);
-    z-index: -1;
-    background: linear-gradient(90deg, var(--color-neon-pink), var(--color-neon-blue), var(--color-neon-green), var(--color-neon-pink));
-    background-size: 400% 100%;
-    animation: rgbBorderShift 8s linear infinite;
-    opacity: 0.8;
+.action-button::before,
+.action-button::after {
+    content: none; /* Remove any previous pseudo-element styling like gradient borders */
+}
+
+@keyframes pulseNeonButton {
+    0%, 100% {
+        box-shadow: var(--button-glow);
+        border-color: color-mix(in srgb, var(--button-color) 30%, var(--color-border-subtle));
+    }
+    50% {
+        box-shadow: var(--button-glow-pulse);
+        border-color: color-mix(in srgb, var(--button-color) 55%, var(--color-border-subtle));
+    }
 }
 
 .action-button span,
 .action-button svg {
     position: relative;
     z-index: 1;
-}
-
-.action-button {
-    background-color: rgba(10, 2, 30, 0.75);
-    /* Slightly more opaque core */
-    color: var(--color-text-primary);
-    text-shadow: 0 0 5px var(--color-text-primary);
-}
-
-.action-button:hover {
-    transform: translateY(-3px) scale(1.03);
-    /* More lift */
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.35);
-    /* Stronger shadow */
-}
-
-.action-button:hover::before {
-    animation-duration: 3s;
-    opacity: 1;
-}
-
-/* Faster, brighter RGB on hover */
-.action-button:active {
-    transform: translateY(0px) scale(1);
-    box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.4);
-    /* Deeper inset active */
+    transition: color var(--transition-fast), filter var(--transition-fast);
 }
 
 .action-button svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+    color: var(--button-color);
+    filter: drop-shadow(0 0 2px var(--button-color));
 }
 
-.action-button.secondary-action {
-    background-color: rgba(10, 2, 30, 0.75);
+.action-button:hover {
+    transform: translateY(-2px);
+    background-color: var(--color-button-bg-hover);
+    animation-play-state: running; /* Keep pulsing, or 'paused' for static glow */
+    box-shadow: var(--button-glow-hover); /* Stronger, static glow on hover */
+    border-color: var(--button-color); /* Full color border on hover */
+}
+.action-button:hover svg {
+    color: var(--button-color); /* Ensure SVG stays colored */
+    filter: drop-shadow(0 0 4px var(--button-color));
 }
 
-.action-button.secondary-action::before {
-    background: linear-gradient(90deg, var(--color-neon-purple), var(--color-neon-orange), var(--color-neon-green), var(--color-neon-purple));
-    background-size: 400% 100%;
-    animation: rgbBorderShiftSecondary 10s linear infinite;
+.action-button:active {
+    transform: translateY(0px) scale(0.98);
+    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4), 0 0 3px var(--button-color); /* Minimal glow when pressed */
+    background-color: color-mix(in srgb, var(--color-button-bg) 90%, black);
 }
 
-.action-button.secondary-action:hover::before {
-    animation-duration: 4s;
+/* Modifier classes for specific button types */
+.action-button--accept {
+    --button-color: var(--color-action-accept);
+    --button-glow: var(--glow-action-accept);
+    --button-glow-pulse: var(--glow-action-accept-pulse);
+    --button-glow-hover: var(--glow-action-accept-hover);
 }
 
-@keyframes rgbBorderShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    100% {
-        background-position: 400% 50%;
-    }
+.action-button--negate {
+    --button-color: var(--color-action-negate);
+    --button-glow: var(--glow-action-negate);
+    --button-glow-pulse: var(--glow-action-negate-pulse);
+    --button-glow-hover: var(--glow-action-negate-hover);
 }
 
-@keyframes rgbBorderShiftSecondary {
-    0% {
-        background-position: 0% 50%;
-    }
+.action-button--info {
+    --button-color: var(--color-action-info);
+    --button-glow: var(--glow-action-info);
+    --button-glow-pulse: var(--glow-action-info-pulse);
+    --button-glow-hover: var(--glow-action-info-hover);
+}
 
-    100% {
-        background-position: 400% 50%;
-    }
+/* Styling for .secondary-action if it's NOT a colored action button */
+.action-button.secondary-action:not(.action-button--accept):not(.action-button--negate):not(.action-button--info) {
+    --button-color: var(--color-action-secondary-dim);
+    --button-glow: var(--glow-action-secondary-dim);
+    --button-glow-pulse: var(--glow-action-secondary-dim-pulse);
+    --button-glow-hover: var(--glow-action-secondary-dim-hover);
+    animation-duration: 3.5s; /* Slower pulse for less emphasis */
+}
+.action-button.secondary-action:not(.action-button--accept):not(.action-button--negate):not(.action-button--info) svg {
+     filter: none;
+}
+
+
+.main-export-button { /* Specific styling for the main export button if needed, inherits action-button */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: calc(var(--padding-unit) * 2.5) calc(var(--padding-unit) * 4);
+    font-size: 1.1rem;
+    letter-spacing: 0.06em;
 }
 
 
@@ -853,47 +937,42 @@ h3 {
     background: transparent;
     border: 1px solid var(--color-border-subtle);
     color: var(--color-text-secondary);
-    padding: var(--padding-unit) calc(var(--padding-unit) * 1.5);
+    padding: calc(var(--padding-unit) * 0.8) calc(var(--padding-unit) * 1.2); /* Compact */
     border-radius: var(--border-radius-sharp);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: var(--padding-unit);
-    font-size: 0.8rem;
+    gap: calc(var(--padding-unit) * 0.8);
+    font-size: 0.75rem; /* Smaller, more utility-like */
     font-weight: 500;
     text-transform: uppercase;
     transition: all var(--transition-fast);
 }
-
 .suggestion-trigger-button:hover {
     color: var(--color-neon-purple);
     border-color: var(--color-neon-purple);
-    box-shadow: 0 0 12px var(--color-neon-purple);
-    /* Brighter hover */
+    box-shadow: 0 0 10px var(--color-neon-purple);
 }
-
 .suggestion-trigger-button svg {
-    width: 16px;
-    height: 16px;
+    width: 14px; /* Adjusted */
+    height: 14px;
 }
 
 .modal-overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(5, 1, 15, 0.9);
-    /* Darker overlay */
-    backdrop-filter: blur(var(--backdrop-blur-strong));
-    -webkit-backdrop-filter: blur(var(--backdrop-blur-strong));
+    background-color: rgba(3, 0, 10, 0.85); /* Darker, slightly less alpha */
+    backdrop-filter: blur(var(--backdrop-blur-light)); /* Lighter blur for less performance hit */
+    -webkit-backdrop-filter: blur(var(--backdrop-blur-light));
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: calc(var(--padding-unit) * 3);
+    padding: calc(var(--padding-unit) * 2.5);
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
     transition: opacity var(--transition-default), visibility 0s var(--transition-default) linear;
 }
-
 .modal-overlay.visible {
     opacity: 1;
     visibility: visible;
@@ -903,41 +982,38 @@ h3 {
 .modal-content {
     composes: neon-panel;
     width: 100%;
-    max-width: 700px;
-    max-height: 90vh;
+    max-width: 680px; /* Adjusted */
+    max-height: 85vh; /* Adjusted */
     display: flex;
     flex-direction: column;
-    transform: scale(0.9) translateY(20px);
+    transform: scale(0.95) translateY(15px); /* Refined entry animation */
     transition: transform var(--transition-default), opacity var(--transition-default);
     opacity: 0;
 }
-
 .modal-overlay.visible .modal-content {
     transform: scale(1) translateY(0);
     opacity: 1;
 }
 
 .modal-header {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: calc(var(--padding-unit) * 3) calc(var(--padding-unit) * 4);
-    border-bottom: 10px solid var(--color-border-glow);
+    padding: calc(var(--padding-unit) * 2.5) calc(var(--padding-unit) * 3.5); /* Adjusted */
+    border-bottom: 1px solid var(--color-border-glow); /* Thinner, cleaner separator */
 }
-
 .modal-header h2 {
-    font-size: 1.6rem;
+    font-size: 1.5rem; /* Adjusted */
     color: var(--color-text-primary);
     margin-bottom: 0;
     display: flex;
     align-items: center;
-    gap: calc(var(--padding-unit) * 2);
+    gap: calc(var(--padding-unit) * 1.8);
     text-shadow: var(--glow-neon-blue);
 }
-
 .modal-header h2 svg {
     color: var(--color-neon-blue);
+    width: 22px; height: 22px; /* Ensure icon size consistency */
 }
 
 .modal-close-button {
@@ -945,353 +1021,316 @@ h3 {
     border: none;
     color: var(--color-text-secondary);
     cursor: pointer;
-    padding: var(--padding-unit);
+    padding: calc(var(--padding-unit) * 0.8);
     border-radius: 50%;
     transition: all var(--transition-fast);
 }
-
 .modal-close-button:hover {
-    background-color: rgba(0, 242, 255, 0.15);
+    background-color: rgba(0, 208, 255, 0.1); /* Subtler hover */
     color: var(--color-neon-blue);
-    /* Brighter hover */
-    transform: rotate(90deg) scale(1.1);
-    /* Added scale */
+    transform: rotate(90deg) scale(1.05);
 }
-
 .modal-close-button svg {
     display: block;
+    width: 22px; height: 22px; /* Match H2 icon */
 }
 
 .modal-body {
-    padding: calc(var(--padding-unit) * 4);
+    padding: calc(var(--padding-unit) * 3.5); /* Adjusted */
     overflow-y: auto;
     flex-grow: 1;
 }
 
 .suggestion-item {
-    margin-bottom: calc(var(--padding-unit) * 3);
-    padding-bottom: calc(var(--padding-unit) * 3);
+    margin-bottom: calc(var(--padding-unit) * 2.5);
+    padding-bottom: calc(var(--padding-unit) * 2.5);
     border-bottom: 1px solid var(--color-border-subtle);
 }
-
 .suggestion-item:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
 }
-
 .suggestion-item h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem; /* Adjusted */
     color: var(--color-neon-blue);
-    margin-bottom: var(--padding-unit);
-    font-weight: 700;
-    letter-spacing: 0.03em;
+    margin-bottom: calc(var(--padding-unit) * 0.8);
+    font-weight: 600;
+    letter-spacing: 0.02em;
 }
-
 .suggestion-item p {
-    font-size: 0.9rem;
+    font-size: 0.88rem; /* Adjusted */
     color: var(--color-text-secondary);
-    line-height: 1.8;
+    line-height: 1.7;
 }
 
 .modal-footer {
-    padding: calc(var(--padding-unit) * 3) calc(var(--padding-unit) * 4);
-    border-top: 1px solid var(--color-border-glow);
+    padding: calc(var(--padding-unit) * 2.5) calc(var(--padding-unit) * 3.5); /* Adjusted */
+    border-top: 1px solid var(--color-border-glow); /* Thinner separator */
     display: flex;
     justify-content: flex-end;
-    gap: calc(var(--padding-unit) * 2);
+    gap: calc(var(--padding-unit) * 1.5);
 }
 
 .modal-action-button {
-    min-width: 140px;
+    min-width: 130px; /* Adjusted */
 }
 
 /* Code Snippet Modal Specifics */
 .code-modal-variant {
-    border-radius: 10px;
+    border-radius: var(--border-radius-soft); /* Softer edges for larger modal */
     border-color: var(--color-neon-green);
-    box-shadow: inset 0 0 20px rgba(0, 255, 133, 0.15), var(--glow-neon-green);
-    /* Enhanced glow */
-    max-width: 950px;
-    /* Wider for code */
+    box-shadow: inset 0 0 18px rgba(0, 232, 112, 0.15), var(--glow-neon-green);
+    max-width: 900px;
 }
-
 .code-modal-variant::before,
 .code-modal-variant::after {
     border-color: var(--color-neon-green);
 }
-
 .code-modal-variant .modal-header h2 svg {
     color: var(--color-neon-green);
 }
-
 .code-modal-variant .modal-header h2 {
     text-shadow: var(--glow-neon-green);
 }
-
 .code-modal-variant .modal-header {
     border-bottom-color: var(--color-neon-green);
 }
-
 .code-modal-variant .modal-footer {
     border-top-color: var(--color-neon-green);
 }
 
 .code-modal-body {
-    padding: 0;
+    padding: 0; /* Remove padding to let pre take full space */
 }
 
 .code-output-wrapper-modal {
-    height: 55vh;
-    /* Increased height */
-    overflow: hidden;
-    border-radius: 0 0 var(--border-radius-standard) var(--border-radius-standard);
+    height: 50vh; /* Adjusted */
+    overflow: hidden; /* Scroll is on the pre */
+    border-radius: 0 0 var(--border-radius-standard) var(--border-radius-standard); /* Match panel rounding */
 }
 
-#code-output-modal {
-    background-color: #0A021B;
-    color: #e0e8ff;
-    /* Lighter code text */
-    padding: calc(var(--padding-unit) * 3.5);
-    /* More padding */
-    border-radius: 0;
+#code-output-modal { /* This is typically a <pre> element */
+    background-color: #070115; /* Darker, more focused code BG */
+    color: #D8E0FF; /* Slightly softer code text */
+    padding: calc(var(--padding-unit) * 3);
+    border-radius: 0; /* Wrapper has radius */
     overflow: auto !important;
     white-space: pre;
     font-family: var(--font-code);
     height: 100%;
-    font-size: 1.05rem;
-    line-height: 1.65;
+    font-size: 1rem; /* Slightly smaller for more code on screen */
+    line-height: 1.6;
     border: none;
     box-shadow: none;
-    /* Increased font size */
     scrollbar-width: thin;
-    /* For Firefox */
-    scrollbar-color: var(--color-neon-green) #0A021B;
-    /* For Firefox */
+    scrollbar-color: var(--color-neon-green) #070115;
 }
-
 #code-output-modal::-webkit-scrollbar {
-    width: 8px;
+    width: 10px; /* Slightly wider for easier grabbing */
+    height: 10px;
 }
-
 #code-output-modal::-webkit-scrollbar-track {
-    background: #0A021B;
+    background: #070115;
 }
-
 #code-output-modal::-webkit-scrollbar-thumb {
     background-color: var(--color-neon-green);
-    border-radius: 4px;
-    border: 2px solid #0A021B;
+    border-radius: var(--border-radius-sharp);
+    border: 2px solid #070115; /* Creates padding around thumb */
 }
-
 #code-output-modal:empty::before {
-    content: "// Code sequence materializing... Stand by.";
+    content: "// Accessing datastream... Code sequence materializing..."; /* Updated text */
     color: var(--color-text-placeholder);
     font-style: italic;
+    opacity: 0.7;
 }
 
-.copy-button-variant::before {
-    background: linear-gradient(90deg, var(--color-neon-green), var(--color-neon-blue), var(--color-neon-pink), var(--color-neon-green));
-    background-size: 400% 100%;
-    animation: rgbBorderShift 6s linear infinite;
+.copy-button-variant {
+    /* Base styling will be from .action-button and its color modifier like .action-button--accept */
 }
-
-.copy-button-variant.copied::before {
-    animation: none;
-    background: var(--color-neon-green);
+.copy-button-variant.copied {
+    --button-color: var(--color-action-accept); /* Ensure it uses accept color */
+    --button-glow: var(--glow-action-accept-hover); /* Use the strong hover glow */
+    animation: none; /* Stop pulsing */
+    background-color: color-mix(in srgb, var(--color-action-accept) 20%, var(--color-button-bg)); /* Greenish background */
+    border-color: var(--color-action-accept);
 }
-
-.copy-button-variant.copied .copy-status-text-modal::after {
-    content: 'ED!';
+.copy-button-variant.copied .copy-status-text-modal {
+    color: var(--color-text-primary); /* Ensure text is readable */
+}
+.copy-button-variant.copied svg {
+    color: var(--color-action-accept); /* Ensure icon is green */
 }
 
 
 /* Site Footer */
 .site-footer {
     width: 100%;
-    padding: calc(var(--padding-unit) * 6) calc(var(--padding-unit) * 3);
-    /* More padding */
-    margin-top: calc(var(--padding-unit) * 10);
+    padding: calc(var(--padding-unit) * 5) calc(var(--padding-unit) * 2.5);
+    margin-top: calc(var(--padding-unit) * 8);
     color: var(--color-text-secondary);
-    /* More margin */
-    font-size: 0.85rem;
+    font-size: 0.82rem; /* Adjusted */
     text-align: center;
     border-top: 1px solid var(--color-border-subtle);
-    background-color: rgba(10, 2, 30, 0.6);
-    /* Slightly more opaque */
+    background-color: rgba(5, 1, 15, 0.7); /* Darker footer bg */
     backdrop-filter: blur(var(--backdrop-blur-light));
     opacity: 0;
-    transform: translateY(30px);
-    animation: powerOn var(--animation-duration-normal) calc(var(--animation-duration-slow) + 0.8s) ease-out forwards;
+    transform: translateY(25px);
+    animation: powerOn var(--animation-duration-normal) calc(var(--animation-duration-slow) + 0.6s) ease-out forwards; /* Adjusted delay */
 }
 
 .site-footer-content {
-    max-width: 900px;
+    max-width: 850px; /* Adjusted */
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: var(--padding-unit);
+    gap: calc(var(--padding-unit) * 0.8);
 }
-
 .site-footer p {
     margin-bottom: 0;
-    line-height: 1.6;
+    line-height: 1.55;
 }
-
 .site-footer .portfolio-link a {
     color: var(--color-neon-pink);
     text-decoration: none;
     font-weight: 500;
     transition: all var(--transition-fast);
-    text-shadow: 0 0 8px var(--color-neon-pink);
-    /* Enhanced shadow */
+    text-shadow: 0 0 6px var(--color-neon-pink);
 }
-
 .site-footer .portfolio-link a:hover,
 .site-footer .portfolio-link a:focus {
-    color: #fff;
-    text-decoration: underline;
+    color: #fff; /* Brighter hover for link */
+    text-decoration: none; /* Consistent no-underline */
     outline: none;
-    text-shadow: var(--glow-neon-pink);
+    text-shadow: var(--glow-neon-pink); /* Use full glow variable */
+    filter: brightness(1.2); /* Subtle brightness increase */
 }
 
 /* Responsive Adjustments */
 @media (max-width: 1200px) {
     .controls-sidebar {
-        position: static;
+        position: static; /* Or 'relative' if issues arise, but static is cleaner */
+        /* top: auto; remove sticky positioning */
     }
 }
 
 @media (max-width: 1024px) {
     .builder-main-content {
         flex-direction: column;
-        gap: calc(var(--padding-unit) * 4);
+        gap: calc(var(--padding-unit) * 3.5);
     }
-
     .controls-sidebar,
     .preview-area {
         min-width: 100%;
     }
-
     .canvas-wrapper {
-        height: auto;
-        min-height: 300px;
+        height: auto; /* Let aspect-ratio dictate more */
+        min-height: 280px;
+        max-height: 50vh; /* Prevent excessive height on portrait tablets */
     }
 }
 
 @media (max-width: 768px) {
     body {
         font-size: 14px;
+        line-height: 1.6;
     }
-
     :root {
-        --padding-unit: 0.4rem;
-        --border-radius-standard: 10px;
-        --border-radius-soft: 16px;
+        --padding-unit: 0.45rem; /* Slightly increased for touch targets */
+        --border-radius-standard: 5px; /* Sharper standard */
+        --border-radius-soft: 8px;   /* Sharper soft */
     }
-
     .app-header {
         flex-direction: column;
         align-items: flex-start;
-        gap: calc(var(--padding-unit) * 4);
-        padding: calc(var(--padding-unit) * 3);
+        gap: calc(var(--padding-unit) * 3);
+        padding: calc(var(--padding-unit) * 2.5);
     }
-
     .app-header h1 {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
     }
-
     .app-header .logo-svg {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
     }
-
     .app-header .background-selector {
         width: 100%;
     }
-
     .app-header .background-selector select {
         width: 100%;
+        font-size: 0.95rem; /* Ensure readable select text */
     }
-
     .page-container {
-        padding: calc(var(--padding-unit) * 2);
+        padding: calc(var(--padding-unit) * 2.5);
     }
-
     .controls-sidebar,
     .preview-area {
-        padding: calc(var(--padding-unit) * 3);
+        padding: calc(var(--padding-unit) * 2.5);
     }
-
     .canvas-wrapper {
-        min-height: 250px;
+        min-height: 220px;
     }
-
     .modal-content {
-        max-width: 95vw;
+        max-width: 90vw; /* More screen real estate */
+        max-height: 88vh;
     }
-
     .code-modal-variant {
-        max-width: 95vw;
+        max-width: 92vw;
     }
-
     .code-output-wrapper-modal {
-        height: 45vh;
+        height: 48vh;
     }
-
 }
 
 @media (max-width: 480px) {
-    h1 {
-        font-size: 1.6rem;
-    }
-
-    h2 {
-        font-size: 1.3rem;
-    }
-
-    .app-header h1 {
-        font-size: 1.6rem;
-    }
-
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.25rem; }
+    .app-header h1 { font-size: 1.5rem; }
     .controls-sidebar h2,
-    .preview-header h2 {
-        font-size: 1.2rem;
-    }
+    .preview-header h2 { font-size: 1.15rem; }
 
-    .canvas-wrapper {
-        min-height: 180px;
-    }
+    .canvas-wrapper { min-height: 160px; }
 
     .action-button {
-        font-size: 0.9rem;
-        width: 100%;
-        padding: calc(var(--padding-unit) * 2.5);
+        font-size: 0.85rem; /* Slightly smaller for small screens */
+        width: 100%; /* Make buttons full-width on smallest screens if not already */
+        padding: calc(var(--padding-unit) * 2.2); /* Adjust padding for full width */
+        gap: var(--padding-unit);
+    }
+     .main-export-button { /* Ensure main export button behaves similarly on small screens */
+        max-width: 100%;
+    }
+    .modal-footer .action-button { /* Modal buttons might not need to be full width */
+        width: auto;
+        padding: calc(var(--padding-unit) * 1.8) calc(var(--padding-unit) * 3);
+    }
+
+    .action-button svg {
+        width: 16px; height: 16px;
     }
 
     .control-item input[type="text"],
     .control-item input[type="number"],
-    .control-item select {
-        font-size: 0.9rem;
+    .control-item select,
+    .control-item input[type="checkbox"]+label {
+        font-size: 0.85rem; /* Smaller inputs */
+    }
+     .control-item .rgba-picker-widget {
+        flex-direction: column; /* Stack RGBA picker on small screens */
+        align-items: stretch;   /* Full width for children */
+        gap: var(--padding-unit);
+    }
+    .control-item .rgba-picker-widget .rgba-color-part {
+        width: 100%; /* Full width color swatch */
+        height: 36px;
     }
 
-    .modal-header h2 {
-        font-size: 1.2rem;
-    }
+    .modal-header h2 { font-size: 1.1rem; }
+    .suggestion-item h3 { font-size: 0.95rem; }
+    .suggestion-item p { font-size: 0.8rem; }
 
-    .suggestion-item h3 {
-        font-size: 1rem;
-    }
-
-    .suggestion-item p {
-        font-size: 0.85rem;
-    }
-
-    #code-output-modal {
-        font-size: 0.9rem;
-    }
-
-    /* Slightly larger for mobile code */
+    #code-output-modal { font-size: 0.85rem; } /* Legible code on small screens */
+    .site-footer { font-size: 0.75rem; }
 }
 
 .visually-hidden {
@@ -1306,10 +1345,15 @@ h3 {
     border: 0 !important;
 }
 
+/* Global Focus Visible - High Contrast for Accessibility & Luxury Feel */
 :focus-visible {
-    outline: 3px solid var(--color-neon-pink) !important;
-    outline-offset: 3px !important;
-    box-shadow: 0 0 0 5px rgba(255, 7, 235, 0.6) !important;
-    /* Stronger focus shadow */
-    border-radius: var(--border-radius-sharp);
+    outline: 2px solid var(--button-color, var(--color-neon-pink)) !important; /* Use button color for focus if available */
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--button-color, var(--color-neon-pink)) 50%, transparent) !important;
+    border-radius: var(--border-radius-sharp); /* Consistent sharp radius */
+}
+/* For elements that already have a border, prevent double border on focus */
+input:focus-visible, select:focus-visible, textarea:focus-visible, .action-button:focus-visible {
+    /* Custom focus is handled by box-shadow and border-color changes usually */
+    /* This ensures the global :focus-visible doesn't override too aggressively if internal focus is preferred */
 }
