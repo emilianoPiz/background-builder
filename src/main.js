@@ -10,6 +10,7 @@
 
 import BackgroundBuilder from './BackgroundBuilder.js'; // Core class for managing backgrounds.
 import backgroundRegistry from './BackgroundManifest.js'; // Array of background effect definitions.
+import { initializeLanguage } from '../src/language.js'; // Path to language.js in src folder
 
 /**
  * @constant {string} LAST_EFFECT_KEY
@@ -76,10 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
      * Instance of the BackgroundBuilder.
      * @type {BackgroundBuilder}
      */
-    // MODIFIED: Pass null for codeOutputId, exportButtonId, and copyCodeButtonId
-    // as these elements are no longer directly on the page for BackgroundBuilder's constructor
-    // to find. Their functionality is now handled via modals and direct DOM manipulation
-    // within BackgroundBuilder methods or inline HTML script.
     const builder = new BackgroundBuilder(
         'preview-canvas',       // ID of the preview canvas
         'controls-container',   // ID of the controls container
@@ -88,10 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
         null                    // Was 'copy-code-button', now handled by modal
     );
 
-    // Check if BackgroundBuilder initialized correctly.
     if (!builder.valid) {
         console.error("[main.DOMContentLoaded] BackgroundBuilder failed to initialize. Aborting.");
-        const mainContent = document.querySelector('.builder-main-content'); // Attempt to display error in UI.
+        const mainContent = document.querySelector('.builder-main-content'); 
         if (mainContent) {
             mainContent.innerHTML = `
                 <div style="color: #ff07eb; text-align: center; padding: 20px; font-size: 1.2em; font-family: 'Roboto Mono', monospace; border: 1px solid #ff07eb; box-shadow: 0 0 10px #ff07eb;">
@@ -102,21 +98,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Exposes the builder instance globally for debugging purposes.
+     * Exposes the builder instance globally.
      * @global
      * @name builderInstance
      * @type {BackgroundBuilder}
      */
     window.builderInstance = builder;
     console.log("[main.DOMContentLoaded] Builder instance initialized:", builder);
+
+    // Initialize language settings
+    // This will set the language and also call builder.updateLanguage if builderInstance is ready
+    initializeLanguage(); 
+    console.log("[main.DOMContentLoaded] Language support initialized.");
+
+
     console.log("[main.DOMContentLoaded] Backgrounds to register from manifest:", backgroundRegistry);
 
-    // --- Register backgrounds from the manifest ---
     if (backgroundRegistry && backgroundRegistry.length > 0) {
-        backgroundRegistry.forEach((bgDetails) => { // Iterate through background definitions from the manifest.
+        backgroundRegistry.forEach((bgDetails) => { 
             if (bgDetails.classRef && typeof bgDetails.classRef === 'function') {
                 console.log(`[main.DOMContentLoaded] Registering: ${bgDetails.name} (Class: ${bgDetails.classRef.name})`);
-                builder.registerBackground( // Register each background with the builder.
+                builder.registerBackground( 
                     bgDetails.name,
                     bgDetails.classRef,
                     bgDetails.defaults || {},
@@ -130,91 +132,78 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("[main.DOMContentLoaded] No backgrounds found in the manifest or manifest is empty. Check js/backgroundManifest.js.");
     }
 
-
-    // --- Populate the background selector dropdown ---
-    const bgSelect = document.getElementById('bg-type-select'); // Get the dropdown element.
+    const bgSelect = document.getElementById('bg-type-select'); 
     if (!bgSelect) {
         console.error("[main.DOMContentLoaded] Background select dropdown ('bg-type-select') not found!");
         return;
     }
 
-    // Clear existing options except the first placeholder option.
     while (bgSelect.options.length > 1) {
         bgSelect.remove(1);
     }
 
-    const registeredNames = Object.keys(builder.registeredBackgrounds); // Get names of all registered backgrounds.
+    const registeredNames = Object.keys(builder.registeredBackgrounds); 
     if (registeredNames.length === 0) {
-        if (bgSelect.options.length <= 1) { // If no backgrounds registered, show a message in dropdown.
+        if (bgSelect.options.length <= 1) { 
             const option = document.createElement('option');
             option.value = "";
-            option.textContent = "No Modules Loaded";
+            // This text might need to be made translatable if it's critical
+            option.textContent = "No Modules Loaded"; 
             option.disabled = true;
             bgSelect.appendChild(option);
         }
         console.warn("[main.DOMContentLoaded] No backgrounds were successfully registered into the builder. Check manifest and class definitions.");
     } else {
-        registeredNames.forEach(name => { // Populate dropdown with registered background names.
+        registeredNames.forEach(name => { 
             const option = document.createElement('option');
             option.value = name;
-            option.textContent = name;
+            option.textContent = name; // Background names themselves are not currently translated via this system
             bgSelect.appendChild(option);
         });
     }
 
-    // Event listener for dropdown changes to select a background.
     bgSelect.addEventListener('change', (e) => {
-        // Ensure e.target is an HTMLSelectElement before accessing its value
         if (e.target instanceof HTMLSelectElement) {
             const selectedValue = e.target.value;
             if (selectedValue && builder.registeredBackgrounds[selectedValue]) {
-                builder.selectBackground(selectedValue); // Select the background in the builder.
-                // Code snippet generation is now triggered by a dedicated button, not on select.
+                builder.selectBackground(selectedValue); 
                 if (builder.currentOptions) {
-                    saveLastEffect(selectedValue, builder.currentOptions); // Save the newly selected effect and its options.
+                    saveLastEffect(selectedValue, builder.currentOptions); 
                 }
             } else {
-                builder.clearCurrentBackground(); // Clear current background if "Select Effect" is chosen.
-                localStorage.removeItem(LAST_EFFECT_KEY); // Remove the last effect from storage.
+                builder.clearCurrentBackground(); 
+                localStorage.removeItem(LAST_EFFECT_KEY); 
             }
         }
     });
 
-    // --- Load last used effect ---
-    const lastEffect = loadLastEffect(); // Attempt to load the last used effect from localStorage.
+    const lastEffect = loadLastEffect(); 
     if (lastEffect.name && builder.registeredBackgrounds[lastEffect.name]) {
-        bgSelect.value = lastEffect.name; // Set dropdown to the loaded effect.
-        builder.selectBackground(lastEffect.name, lastEffect.options || undefined); // Select the background with its saved options.
-        // Code snippet generation is now triggered by a dedicated button.
+        bgSelect.value = lastEffect.name; 
+        builder.selectBackground(lastEffect.name, lastEffect.options || undefined); 
         console.log(`[main.DOMContentLoaded] Loaded and selected last effect: "${lastEffect.name}" with options:`, lastEffect.options);
     } else if (registeredNames.length > 0) {
+        // If there's no valid last effect but effects are registered, ensure a clean state.
+        // builder.selectBackground(registeredNames[0]); // Optionally select the first available effect
+        // For now, stick to clearing if no valid last effect.
         builder.clearCurrentBackground();
         console.log("[main.DOMContentLoaded] No valid last effect loaded, or no last effect. Cleared background.");
     } else {
+        // No registered effects and no last effect.
         builder.clearCurrentBackground();
         console.log("[main.DOMContentLoaded] No registered effects available. Cleared background.");
     }
 
-    /**
-     * Listens for custom 'backgroundOptionChanged' events dispatched by BackgroundBuilder.
-     * When an option changes, it saves the current effect's name and all its options.
-     * @listens backgroundOptionChanged
-     * @param {CustomEvent} event - The custom event object.
-     * @param {object} event.detail - The detail object.
-     * @param {string} event.detail.effectName - The name of the effect whose option changed.
-     * @param {object} event.detail.options - The complete set of options for that effect.
-     */
+
     document.addEventListener('backgroundOptionChanged', (event) => {
-        // Ensure event is a CustomEvent and has the expected detail structure
         if (event instanceof CustomEvent && event.detail && event.detail.effectName && event.detail.options) {
-            saveLastEffect(event.detail.effectName, event.detail.options); // Save changes to localStorage.
+            saveLastEffect(event.detail.effectName, event.detail.options); 
             console.log(`[main.backgroundOptionChanged] Detected option change for "${event.detail.effectName}". Saved to localStorage.`);
         } else {
             console.warn("[main.backgroundOptionChanged] Received event with incomplete details:", event.detail);
         }
     });
 
-    // Reset options button functionality
     const resetOptionsButton = document.getElementById('reset-options-button');
     if (resetOptionsButton) {
         resetOptionsButton.addEventListener('click', () => {
@@ -222,9 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentBgName = builder.currentBackgroundType;
                 const defaultOptions = builder.registeredBackgrounds[currentBgName].defaults;
                 console.log(`[main.resetOptions] Resetting options for "${currentBgName}" to defaults:`, defaultOptions);
-                // Reselect the background with its default options
                 builder.selectBackground(currentBgName, JSON.parse(JSON.stringify(defaultOptions)));
-                // Save the reset state
                 saveLastEffect(currentBgName, builder.currentOptions);
             } else {
                 console.warn("[main.resetOptions] No current background selected or found to reset.");

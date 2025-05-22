@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BackgroundCraft-test</title>
+    <title data-lang-key="pageTitle">BackgroundCraft-test</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -26,12 +26,20 @@
                         d="M12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2ZM12 3.5C16.6944 3.5 20.5 7.30558 20.5 12C20.5 16.6944 16.6944 20.5 12 20.5C7.30558 20.5 3.5 16.6944 3.5 12C3.5 7.30558 7.30558 3.5 12 3.5ZM11 7V10H8V12H11V15H13V12H16V10H13V7H11Z">
                     </path>
                 </svg>
-                <h1><span>Background</span>Craft</h1> v.0.0.1
+                <h1><span>Background</span>Craft</h1>
+            </div>
+            <div class="language-selector-container">
+                <label for="language-select" id="language-select-label" class="visually-hidden" data-lang-key="selectLanguageLabel">Select Language</label>
+                <select id="language-select" aria-labelledby="language-select-label">
+                    <option value="en">Eng </option>
+                    <option value="es">Es </option>
+                    <option value="it">Ita </option>
+                </select>
             </div>
             <div class="background-selector">
-                <label for="bg-type-select" id="bg-type-select-label">Select Module:</label>
+                <label for="bg-type-select" id="bg-type-select-label" data-lang-key="selectModuleLabel">Select Module:</label>
                 <select id="bg-type-select" aria-labelledby="bg-type-select-label">
-                    <option value="">-- Load Effect Module --</option>
+                    <option value="" data-lang-key="loadEffectModuleOption">-- Load Effect Module --</option>
                 </select>
             </div>
         </header>
@@ -40,20 +48,20 @@
         <main class="builder-main-content" role="main" aria-labelledby="main-content-heading">
             <aside class="controls-sidebar" role="region" aria-labelledby="controls-sidebar-heading">
                 <div class="sidebar-header">
-                    <h2 id="controls-sidebar-heading">INTERFACE</h2>
+                    <h2 id="controls-sidebar-heading" data-lang-key="controlsSidebarHeading">INTERFACE</h2>
                     <button id="suggestion-modal-trigger" class="suggestion-trigger-button"
-                        aria-label="Show Tactical Briefing">
+                        data-lang-key-aria-label="suggestionTriggerButtonAriaLabel" aria-label="Show Tactical Briefing">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="12" y1="16" x2="12" y2="12"></line>
                             <line x1="12" y1="8" x2="12.01" y2="8"></line>
                         </svg>
-                        <span>Briefing</span>
+                        <span data-lang-key="suggestionTriggerButtonText">Briefing</span>
                     </button>
                 </div>
                 <div id="controls-container">
-                    <p class="placeholder-text">Awaiting effect module selection...</p>
+                    <p class="placeholder-text" data-lang-key="controlsPlaceholderText">Awaiting effect module selection...</p>
                 </div>
                 <div class="control-item reset-options-container">
                     <button id="reset-options-button" class="action-button secondary-action action-button--negate">
@@ -63,17 +71,17 @@
                                 d="M10 2.5a7.5 7.5 0 00-7.492 7.176.75.75 0 01-1.496-.068A9 9 0 0110.005 1a.75.75 0 01.742.815L10.5 3.55A7.5 7.5 0 0010 2.5zM2.538 10.75a.75.75 0 01.068-1.496A9.002 9.002 0 0117 10.005a.75.75 0 01-.815.742L14.45 10.5a7.5 7.5 0 00-11.912.25zM10 17.5a7.5 7.5 0 007.492-7.176.75.75 0 011.496.068A9 9 0 019.995 19a.75.75 0 01-.742-.815L9.5 16.45a7.5 7.5 0 00.5 1.05zM17.462 9.25a.75.75 0 01-.068 1.496A9.002 9.002 0 013 9.995a.75.75 0 01.815-.742L5.55 9.5a7.5 7.5 0 0011.912-.25z">
                             </path>
                         </svg>
-                        <span>Reset Parameters</span>
+                        <span data-lang-key="resetParametersButton">Reset Parameters</span>
                     </button>
                 </div>
             </aside>
 
             <section class="preview-area" role="region" aria-labelledby="preview-area-heading">
                 <div class="preview-header">
-                    <h2 id="preview-area-heading">CRAFT::LIVE_PREVIEW</h2>
+                    <h2 id="preview-area-heading" >CRAFT::LIVE_PREVIEW</h2>
                 </div>
                 <div class="canvas-wrapper">
-                    <canvas id="preview-canvas" aria-label="Live preview of the selected background effect"></canvas>
+                    <canvas id="preview-canvas" data-lang-key-aria-label="previewCanvasAriaLabel" aria-label="Live preview of the selected background effect"></canvas>
                     <div id="canvas-placeholder" class="canvas-placeholder-content">
                         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
@@ -83,19 +91,19 @@
                             <line x1="9" y1="3" x2="9" y2="21"></line>
                             <line x1="15" y1="3" x2="15" y2="21"></line>
                         </svg>
-                        <p>Engage Rendering Core: Select Module</p>
+                        <p data-lang-key="canvasPlaceholderText">Engage Rendering Core: Select Module</p>
                     </div>
                 </div>
                 <div class="export-action-area">
                     <button id="show-code-modal-button" class="action-button main-export-button action-button--accept"
-                        aria-label="Extract Code Sequence">
+                        data-lang-key-aria-label="extractCodeButtonAriaLabel" aria-label="Extract Code Sequence">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="22"
                             height="22" aria-hidden="true">
                             <path fill-rule="evenodd"
                                 d="M6.28 5.22a.75.75 0 010 1.06L3.56 9l2.72 2.72a.75.75 0 01-1.06 1.06L1.97 9.53a.75.75 0 010-1.06l3.25-3.25a.75.75 0 011.06 0zm7.44 0a.75.75 0 011.06 0l3.25 3.25a.75.75 0 010 1.06l-3.25 3.25a.75.75 0 01-1.06-1.06L16.44 9l-2.72-2.72a.75.75 0 010-1.06zM11.75 4.5a.75.75 0 00-1.5 0v11a.75.75 0 001.5 0v-11z"
                                 clip-rule="evenodd" />
                         </svg>
-                        <span>EXTRACT CODE SEQUENCE</span>
+                        <span data-lang-key="extractCodeButtonText">EXTRACT CODE SEQUENCE</span>
                     </button>
                 </div>
             </section>
@@ -113,9 +121,9 @@
                         <polyline points="15 3 21 3 21 9"></polyline>
                         <line x1="10" y1="14" x2="21" y2="3"></line>
                     </svg>
-                    Tactical Briefing
+                    <span data-lang-key="suggestionModalTitle">Tactical Briefing</span>
                 </h2>
-                <button id="suggestion-modal-close" class="modal-close-button" aria-label="Close Suggestions Modal">
+                <button id="suggestion-modal-close" class="modal-close-button" data-lang-key-aria-label="closeSuggestionModalAriaLabel" aria-label="Close Suggestions Modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -126,30 +134,30 @@
             <div class="modal-body">
                 <div id="modal-suggestion-content">
                     <div class="suggestion-item">
-                        <h3>Engage Effect Modules</h3>
-                        <p>Utilize the "Select Module" dropdown to interface with diverse background generation
+                        <h3 data-lang-key="suggestionItem1Title">Engage Effect Modules</h3>
+                        <p data-lang-key="suggestionItem1Desc">Utilize the "Select Module" dropdown to interface with diverse background generation
                             algorithms. Each module possesses unique operational parameters.</p>
                     </div>
                     <div class="suggestion-item">
-                        <h3>Calibrate Parameters</h3>
-                        <p>Upon module selection, the "System Interface" panel will populate with adjustable parameters.
+                        <h3 data-lang-key="suggestionItem2Title">Calibrate Parameters</h3>
+                        <p data-lang-key="suggestionItem2Desc">Upon module selection, the "System Interface" panel will populate with adjustable parameters.
                             Manipulate values such as color spectrum, particle velocity, and density to achieve desired
                             visual output.</p>
                     </div>
                     <div class="suggestion-item">
-                        <h3>Real-Time Visualization</h3>
-                        <p>The "Visualization Matrix" provides immediate feedback to parameter adjustments. Observe
+                        <h3 data-lang-key="suggestionItem3Title">Real-Time Visualization</h3>
+                        <p data-lang-key="suggestionItem3Desc">The "Visualization Matrix" provides immediate feedback to parameter adjustments. Observe
                             dynamic resizing capabilities by altering viewport dimensions.</p>
                     </div>
                     <div class="suggestion-item">
-                        <h3>Code Sequence Extraction</h3>
-                        <p>Satisfied with the generated visual? Activate "Extract Code Sequence". A secure datastream
+                        <h3 data-lang-key="suggestionItem4Title">Code Sequence Extraction</h3>
+                        <p data-lang-key="suggestionItem4Desc">Satisfied with the generated visual? Activate "Extract Code Sequence". A secure datastream
                             will provide the self-contained HTML/JavaScript protocol for integration.</p>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="suggestion-modal-got-it" class="action-button modal-action-button action-button--accept">Acknowledge</button>
+                <button id="suggestion-modal-got-it" class="action-button modal-action-button action-button--accept" data-lang-key="suggestionModalAcknowledgeButton">Acknowledge</button>
             </div>
         </div>
     </div>
@@ -164,9 +172,9 @@
                         <polyline points="16 18 22 12 16 6"></polyline>
                         <polyline points="8 6 2 12 8 18"></polyline>
                     </svg>
-                    Code Sequence Extracted
+                    <span data-lang-key="codeModalTitle">Code Sequence Extracted</span>
                 </h2>
-                <button id="code-snippet-modal-close" class="modal-close-button" aria-label="Close Code Modal">
+                <button id="code-snippet-modal-close" class="modal-close-button" data-lang-key-aria-label="closeCodeModalAriaLabel" aria-label="Close Code Modal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -188,10 +196,10 @@
                         <path
                             d="M4.5 6A1.5 1.5 0 003 7.5v10A1.5 1.5 0 004.5 19h7a1.5 1.5 0 001.5-1.5v-1.128a.75.75 0 00-1.5 0V17.5a.5.5 0 01-.5.5h-7a.5.5 0 01-.5-.5v-10a.5.5 0 01.5-.5H6V6H4.5z" />
                     </svg>
-                    <span class="copy-status-text-modal">Copy Sequence</span>
+                    <span class="copy-status-text-modal" data-lang-key="copySequenceButtonText">Copy Sequence</span>
                 </button>
                 <button id="code-snippet-modal-dismiss"
-                    class="action-button secondary-action modal-action-button action-button--info">Dismiss</button>
+                    class="action-button secondary-action modal-action-button action-button--info" data-lang-key="codeModalDismissButton">Dismiss</button>
             </div>
         </div>
     </div>
@@ -201,14 +209,17 @@
 
     <footer class="site-footer" role="contentinfo">
         <div class="site-footer-content">
-            <p>&copy; <span id="current-year"></span> BackgroundCraft // FREE AND OPEN SOURCE</p>
+            <p><span data-lang-key="footerCopyrightText">&copy; <span id="current-year"></span> BackgroundCraft // FREE AND OPEN SOURCE</span></p>
             <p class="portfolio-link">
-                Designed & Developed by:
+                <span data-lang-key="footerDesignedByText">Designed & Developed by:</span>
                 <a href="https://emilianopiz.github.io/webdev-portfolio/" target="_blank"
                     rel="noopener noreferrer">Emiliano Piz</a>.
             </p>
         </div>
+         v.0.0.1
     </footer>
+    <script src="src/translations.js" type="module"></script>
+    <script src="src/language.js" type="module"></script>
     <script src="src/main.js" type="module"></script>
 
 
@@ -257,7 +268,15 @@
                 if (window.builderInstance && typeof window.builderInstance.generateCodeSnippet === 'function') {
                     window.builderInstance.generateCodeSnippet();
                 } else {
-                    if (codeOutputModal) codeOutputModal.textContent = "// Error: Builder instance not found or generateCodeSnippet is not a function.";
+                    const key = 'codeOutputModalErrorBuilder';
+                    const fallbackText = "// Error: Builder instance not found or generateCodeSnippet is not a function.";
+                    let textToShow = fallbackText;
+                    if (window.currentTranslations && window.currentTranslations[key]) {
+                        textToShow = window.currentTranslations[key];
+                    } else if (window.defaultTranslations && window.defaultTranslations[key]) {
+                        textToShow = window.defaultTranslations[key];
+                    }
+                    if (codeOutputModal) codeOutputModal.textContent = textToShow;
                 }
                 codeSnippetModalOverlay.removeAttribute('aria-hidden');
                 codeSnippetModalOverlay.classList.add('visible');
@@ -303,33 +322,39 @@
             bgSelect.addEventListener('change', toggleCanvasPlaceholder);
             toggleCanvasPlaceholder(); // Initial check
         }
+        
+        // Make originalModalCopyText accessible for language.js
+        // This part is slightly modified to integrate better with language.js updates
+        let originalModalCopyText = 'Copy Sequence'; // Default
+        const copyStatusTextModalElement = document.querySelector('#copy-code-modal-button .copy-status-text-modal');
+        if (copyStatusTextModalElement) {
+             originalModalCopyText = copyStatusTextModalElement.textContent;
+        }
+        window.updateOriginalModalCopyText = function(newText) {
+            originalModalCopyText = newText;
+        }
 
-        // Copy Button Status (for new modal)
+
+        // Copy Button Status (for new modal) - This logic might be partially duplicated/overridden by language.js
+        // BackgroundBuilder's copySnippetToClipboard will handle UI updates more directly now.
         if (copyCodeModalButton) {
-            const copyStatusTextModal = copyCodeModalButton.querySelector('.copy-status-text-modal');
-            const originalModalCopyText = copyStatusTextModal ? copyStatusTextModal.textContent : 'Copy Sequence';
-            let modalTimeoutId = null;
-
             copyCodeModalButton.addEventListener('click', () => {
                 if (window.builderInstance && typeof window.builderInstance.copySnippetToClipboard === 'function') {
-                    window.builderInstance.copySnippetToClipboard(); // This function should ideally return true/false or a promise
-
-                    // Assume copy was successful for UI update
-                    if (copyStatusTextModal) {
-                        copyStatusTextModal.textContent = 'Sequence Copied!';
-                        copyCodeModalButton.classList.add('copied');
-                    }
-                    
-                    clearTimeout(modalTimeoutId);
-                    modalTimeoutId = setTimeout(() => {
-                        if (copyStatusTextModal) {
-                            copyStatusTextModal.textContent = originalModalCopyText;
-                            copyCodeModalButton.classList.remove('copied');
-                        }
-                    }, 2500);
+                    window.builderInstance.copySnippetToClipboard();
+                    // The builderInstance.copySnippetToClipboard method now handles UI feedback
+                    // (like "Sequence Copied!" or "Copy Failed!").
+                    // The text reset is also handled within copySnippetToClipboard via language.js logic.
                 } else {
-                    if (copyStatusTextModal) {
-                         copyStatusTextModal.textContent = 'Copy Failed!'; // Indicate failure
+                    if (copyStatusTextModalElement) {
+                        const key = 'copyStatusFailed';
+                        const fallbackText = "Copy Failed!";
+                         let textToShow = fallbackText;
+                        if (window.currentTranslations && window.currentTranslations[key]) {
+                            textToShow = window.currentTranslations[key];
+                        } else if (window.defaultTranslations && window.defaultTranslations[key]) {
+                            textToShow = window.defaultTranslations[key];
+                        }
+                        copyStatusTextModalElement.textContent = textToShow;
                     }
                     console.error("Builder instance or copySnippetToClipboard function not found.");
                 }

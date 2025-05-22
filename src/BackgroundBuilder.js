@@ -149,6 +149,20 @@ class BackgroundBuilder {
     resizeObserver = null;
 
     /**
+     * The current language code (e.g., 'en', 'es').
+     * @type {string}
+     * @private
+     */
+    currentLang = 'en';
+    /**
+     * An object holding the translations for the current language.
+     * @type {Record<string, string>}
+     * @private
+     */
+    translations = {};
+
+
+    /**
      * Creates an instance of BackgroundBuilder.
      * Initializes the builder by fetching necessary DOM elements and setting up
      * event listeners and the resize observer.
@@ -237,6 +251,59 @@ class BackgroundBuilder {
     }
 
     /**
+     * Updates the builder's language and translations.
+     * If a background is currently active, it re-selects it to potentially update UI text.
+     * @param {string} lang - The new language code (e.g., 'en').
+     * @param {Record<string, string>} translationsData - The translation strings for the new language.
+     */
+    updateLanguage(lang, translationsData) {
+        this.currentLang = lang;
+        this.translations = translationsData || {};
+        console.log(`[BackgroundBuilder.updateLanguage] Language set to: ${lang}`);
+
+        // If a background is currently selected, re-select it.
+        // This will trigger renderControls, which could in the future use translated schema labels/tooltips.
+        // It also ensures any messages currently displayed are updated if they depend on this.translations.
+        if (this.currentBackgroundType && this.controlsContainer) {
+            const name = this.currentBackgroundType;
+            const options = { ...this.currentOptions }; // Keep current options
+
+            // Temporarily clear controls to show immediate feedback if re-rendering takes time or if an error occurs
+            // this.controlsContainer.innerHTML = `<p class="placeholder-text">${this.translations.loadingControls || 'Loading controls...'}</p>`;
+
+            // Re-select the background to apply new language to any dynamic text (primarily error messages or placeholders for now)
+            // and to establish the mechanism for future dynamic label/tooltip translation in renderControls
+            this.selectBackground(name, options);
+        } else if (this.controlsContainer && !this.currentBackgroundType) {
+            // If no background is selected, update the placeholder message in controlsContainer
+             this.controlsContainer.innerHTML = `<p class="placeholder-text">${this.translations.controlsPlaceholderText || 'Awaiting effect module selection...'}</p>`;
+        }
+
+        // Update code output modal placeholder if it's in its initial state
+        const codeOutputModalElem = document.getElementById('code-output-modal');
+        if (codeOutputModalElem) {
+            const initialTextKey = 'codeOutputModalInitial';
+            const currentText = codeOutputModalElem.textContent.trim();
+            let isInitial = false;
+            // Check against all known translations of initial text
+            // This check logic is similar to language.js, might be consolidated in future
+            if (window.translations) { // Assuming global translations object for this check
+                 for (const langKey in window.translations) {
+                    if (window.translations[langKey][initialTextKey] === currentText) {
+                        isInitial = true;
+                        break;
+                    }
+                }
+            }
+
+            if (isInitial) {
+                 codeOutputModalElem.textContent = this.translations[initialTextKey] || "// Code sequence will materialize here...";
+            }
+        }
+    }
+
+
+    /**
      * Registers a new background effect class with the builder.
      * @param {string} name - The display name for the background effect.
      * @param {Function} BgClass - The constructor class for the background effect.
@@ -277,7 +344,8 @@ class BackgroundBuilder {
         if (!this.registeredBackgrounds[name]) {
             console.error(`[BackgroundBuilder.selectBackground] Background "${name}" not registered.`);
             if (this.controlsContainer) { // Display error in controls panel
-                 this.controlsContainer.innerHTML = `<p class="placeholder-text error-text">Error: Module "${name}" is not registered.</p>`;
+                 const errorMsgTemplate = this.translations.errorModuleNotRegistered || 'Error: Module "%NAME%" is not registered.';
+                 this.controlsContainer.innerHTML = `<p class="placeholder-text error-text">${errorMsgTemplate.replace('%NAME%', name)}</p>`;
             }
             return;
         }
@@ -322,7 +390,10 @@ class BackgroundBuilder {
             this.currentBackgroundInstance = new bgInfo.class(this.previewCanvas, { ...this.currentOptions });
         } catch (e) {
             console.error(`[BackgroundBuilder.selectBackground] Error instantiating ${bgInfo.className}:`, e);
-            if(this.controlsContainer) this.controlsContainer.innerHTML = `<p class="placeholder-text error-text">Error creating module '${name}'. Check console.</p>`;
+            if(this.controlsContainer) {
+                const errorMsgTemplate = this.translations.errorCreatingModule || "Error creating module '%NAME%'. Check console.";
+                this.controlsContainer.innerHTML = `<p class="placeholder-text error-text">${errorMsgTemplate.replace('%NAME%', name)}</p>`;
+            }
             this.currentBackgroundInstance = null; this.currentBackgroundType = null;
             return;
         }
@@ -351,7 +422,7 @@ class BackgroundBuilder {
         }
         this.controlsContainer.innerHTML = ''; // Clear previous controls
         if (!schema || schema.length === 0) {
-            this.controlsContainer.innerHTML = '<p class="placeholder-text">No adjustable parameters for this module.</p>';
+            this.controlsContainer.innerHTML = `<p class="placeholder-text">${this.translations.noAdjustableParametersForModule || 'No adjustable parameters for this module.'}</p>`;
             return;
         }
 
@@ -361,83 +432,83 @@ class BackgroundBuilder {
             const labelEl = document.createElement('label');
             labelEl.htmlFor = `ctrl-${item.key}`;
 
-            // Add label first for most types, but handle boolean specifically for layout
+            // TODO: For full translation, item.label should be a key e.g. item.labelKey
+            // const labelText = (this.translations && this.translations[item.labelKey]) ? this.translations[item.labelKey] : item.label;
+            const labelText = item.label; // Using hardcoded label for now
+
             if (item.type !== 'boolean') {
-                labelEl.textContent = item.label + ':';
+                labelEl.textContent = labelText + ':';
                 controlWrapper.appendChild(labelEl);
             }
 
-            let primaryInputControl; // This will be the main input element for the option
+            let primaryInputControl; 
 
             if (item.type === 'boolean') {
                 const checkboxInput = document.createElement('input');
                 checkboxInput.type = 'checkbox';
-                checkboxInput.checked = !!this.currentOptions[item.key]; // Ensure boolean
+                checkboxInput.checked = !!this.currentOptions[item.key]; 
                 checkboxInput.id = `ctrl-${item.key}`;
                 
-                labelEl.textContent = item.label; // Set label text for boolean
+                labelEl.textContent = labelText; 
                 
-                const checkboxWrapper = document.createElement('div'); // Wrapper for layout
+                const checkboxWrapper = document.createElement('div'); 
                 checkboxWrapper.className = 'checkbox-wrapper';
                 checkboxWrapper.appendChild(checkboxInput);
-                checkboxWrapper.appendChild(labelEl); // Label after checkbox
+                checkboxWrapper.appendChild(labelEl); 
                 controlWrapper.appendChild(checkboxWrapper);
                 
-                primaryInputControl = checkboxInput; // This is the control to listen to
+                primaryInputControl = checkboxInput; 
                 checkboxInput.addEventListener('change', (e) => {
                     if (e.target instanceof HTMLInputElement) {
                         this.updateOption(item.key, e.target.checked);
                     }
                 });
             }
-            // Enhanced RGBA text input with visual picker
             else if (item.type === 'text' && SINGLE_RGBA_TEXT_KEYS.has(item.key)) {
                 const textInput = document.createElement('input');
-                textInput.type = 'text'; // Can be 'hidden' if only visual picker is desired
+                textInput.type = 'text'; 
                 textInput.id = `ctrl-${item.key}`;
                 textInput.value = this.currentOptions[item.key] !== undefined ?
                     String(this.currentOptions[item.key]) :
                     (item.default !== undefined ? String(item.default) : (item.placeholder || ''));
                 if (item.placeholder) textInput.placeholder = item.placeholder;
                 
-                primaryInputControl = textInput; // This text input remains the source of truth
+                primaryInputControl = textInput; 
                 controlWrapper.appendChild(textInput);
 
                 const pickerContainer = document.createElement('div');
                 pickerContainer.className = 'rgba-picker-widget';
-                // Apply some basic inline styles for the widget container
                 pickerContainer.style.display = 'flex';
                 pickerContainer.style.alignItems = 'center';
-                pickerContainer.style.gap = '8px'; // Space between color input and alpha slider
-                pickerContainer.style.marginTop = '4px'; // Space below the text input
+                pickerContainer.style.gap = '8px'; 
+                pickerContainer.style.marginTop = '4px';
 
-                const colorInput = document.createElement('input'); // For RGB part
+                const colorInput = document.createElement('input'); 
                 colorInput.type = 'color';
                 colorInput.className = 'rgba-color-part';
-                colorInput.title = "Select RGB color";
+                colorInput.title = "Select RGB color"; // TODO: Translate title
 
-                const alphaSlider = document.createElement('input'); // For Alpha part
+                const alphaSlider = document.createElement('input'); 
                 alphaSlider.type = 'range';
                 alphaSlider.min = '0';
                 alphaSlider.max = '1';
-                alphaSlider.step = '0.01'; // 2 decimal places for alpha
+                alphaSlider.step = '0.01'; 
                 alphaSlider.className = 'rgba-alpha-part';
-                alphaSlider.title = "Adjust alpha (opacity)";
-                alphaSlider.style.flexGrow = "1"; // Allow slider to fill space
+                alphaSlider.title = "Adjust alpha (opacity)"; // TODO: Translate title
+                alphaSlider.style.flexGrow = "1"; 
 
-                /** Updates the visual color picker and alpha slider from the text input's RGBA value. */
                 const updateVisualPickerFromText = () => {
                     const rgbaValue = textInput.value;
                     const parsed = parseRgbaString(rgbaValue);
                     if (parsed) {
                         colorInput.value = rgbToHex(parsed.r, parsed.g, parsed.b);
                         alphaSlider.value = String(parsed.a);
-                    } else { // Handle cases where text input might not be a valid RGBA (e.g. user typed hex)
-                        const hexRgb = hexToRgb(rgbaValue); // Try parsing as hex
+                    } else { 
+                        const hexRgb = hexToRgb(rgbaValue); 
                         if (hexRgb) {
-                            colorInput.value = rgbToHex(hexRgb.r, hexRgb.g, hexRgb.b); // Ensure format #RRGGBB
-                            alphaSlider.value = '1'; // Assume full alpha for plain hex
-                        } else { // Fallback to default/placeholder if completely unparseable
+                            colorInput.value = rgbToHex(hexRgb.r, hexRgb.g, hexRgb.b); 
+                            alphaSlider.value = '1'; 
+                        } else { 
                             const defaultSource = item.default || item.placeholder || 'rgba(0,0,0,1)';
                             const parsedDefault = parseRgbaString(defaultSource) || { r: 0, g: 0, b: 0, a: 1 };
                             colorInput.value = rgbToHex(parsedDefault.r, parsedDefault.g, parsedDefault.b);
@@ -446,7 +517,6 @@ class BackgroundBuilder {
                     }
                 };
 
-                /** Updates the main text input's RGBA value from the visual color picker and alpha slider. */
                 const updateTextFromVisualPicker = () => {
                     const hexColor = colorInput.value;
                     const alpha = parseFloat(alphaSlider.value);
@@ -456,7 +526,6 @@ class BackgroundBuilder {
                         const newRgbaString = `rgba(${rgb.r},${rgb.g},${rgb.b},${alpha.toFixed(2)})`;
                         if (textInput.value !== newRgbaString) {
                             textInput.value = newRgbaString;
-                            // Dispatch an 'input' event on the textInput to trigger updateOption
                             textInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
                         }
                     }
@@ -465,29 +534,27 @@ class BackgroundBuilder {
                 colorInput.addEventListener('input', updateTextFromVisualPicker);
                 alphaSlider.addEventListener('input', updateTextFromVisualPicker);
 
-                // If the textInput is directly edited, update the visual picker elements
-                // This listener is separate from the one that calls `updateOption`
                 textInput.addEventListener('input', () => {
-                    // Defer to allow `updateOption` (called by the main listener) to process first
                     setTimeout(updateVisualPickerFromText, 0);
                 });
                 
-                updateVisualPickerFromText(); // Initialize visual picker state
+                updateVisualPickerFromText(); 
 
                 pickerContainer.appendChild(colorInput);
                 pickerContainer.appendChild(alphaSlider);
                 controlWrapper.appendChild(pickerContainer);
             }
-            // Standard select dropdown
             else if (item.type === 'select') {
                 const selectInput = document.createElement('select');
                 selectInput.id = `ctrl-${item.key}`;
-                if (!item.options || !Array.isArray(item.options)) { // Safety check for options
+                if (!item.options || !Array.isArray(item.options)) { 
+                    // TODO: Translate error option label
                     item.options = [{value: '', label: 'Error: No options provided in schema'}];
                 }
                 item.options.forEach(opt => {
                     const optionEl = document.createElement('option');
                     optionEl.value = opt.value;
+                     // TODO: For full translation, opt.label should be a key
                     optionEl.textContent = opt.label;
                     if (String(this.currentOptions[item.key]) === String(opt.value)) {
                         optionEl.selected = true;
@@ -495,14 +562,13 @@ class BackgroundBuilder {
                     selectInput.appendChild(optionEl);
                 });
                 primaryInputControl = selectInput;
-                selectInput.addEventListener('change', (e) => { // 'change' is more suitable for select
+                selectInput.addEventListener('change', (e) => { 
                     if (e.target instanceof HTMLSelectElement) {
                         this.updateOption(item.key, e.target.value);
                     }
                 });
                 controlWrapper.appendChild(selectInput);
             }
-            // Default handler for other input types (number, non-RGBA text, standard color)
             else { 
                 const generalInput = document.createElement('input');
                 generalInput.type = item.type;
@@ -510,45 +576,44 @@ class BackgroundBuilder {
                 generalInput.value = this.currentOptions[item.key] !== undefined ?
                                     String(this.currentOptions[item.key]) :
                                     (item.default !== undefined ? String(item.default) : '');
-                if (item.placeholder) generalInput.placeholder = item.placeholder;
+                if (item.placeholder) generalInput.placeholder = item.placeholder; // TODO: placeholder could be a translatable key
                 
                 if (item.type === 'number') {
                     if (item.min !== undefined) generalInput.min = String(item.min);
                     if (item.max !== undefined) generalInput.max = String(item.max);
-                    // Set step for fine-grained control and to indicate decimal type
                     const schemaStep = parseFloat(item.step);
                     if (!isNaN(schemaStep) && Number.isInteger(schemaStep) && schemaStep >= 1) {
                         generalInput.step = String(schemaStep);
-                    } else if (!isNaN(schemaStep)) { // Use schema step if it's a decimal (e.g., 0.1, 0.005)
+                    } else if (!isNaN(schemaStep)) { 
                         generalInput.step = String(item.step);
-                    } else { // Default for numbers that might be decimal but have no specific step
+                    } else { 
                         generalInput.step = '0.0001'; 
                     }
                 }
-                if (item.type === 'color' && !generalInput.value) { // Default for standard HTML color pickers
-                     generalInput.value = '#00F2FF'; // A vibrant default
+                if (item.type === 'color' && !generalInput.value) { 
+                     generalInput.value = '#00F2FF'; 
                 }
 
                 primaryInputControl = generalInput;
                 controlWrapper.appendChild(generalInput);
             }
 
-            // Attach the main 'input' event listener that calls updateOption
-            // This applies to text, number, and the text part of our RGBA widget.
-            // Boolean and Select have their own specific listeners ('change').
             if (primaryInputControl && item.type !== 'boolean' && item.type !== 'select') {
                  primaryInputControl.addEventListener('input', (e) => {
-                    if (e.target instanceof HTMLInputElement) { // Ensure target is an input element
+                    if (e.target instanceof HTMLInputElement) { 
                         this.updateOption(item.key, e.target.value);
                     }
                 });
             }
 
-            // Add tooltip if specified in schema
-            if (item.tooltip) {
+            // TODO: For full translation, item.tooltip should be a key e.g. item.tooltipKey
+            // const tooltipText = (this.translations && this.translations[item.tooltipKey]) ? this.translations[item.tooltipKey] : item.tooltip;
+            const tooltipText = item.tooltip; // Using hardcoded tooltip for now
+
+            if (tooltipText) {
                 const tooltipEl = document.createElement('small');
                 tooltipEl.className = 'control-tooltip';
-                tooltipEl.textContent = item.tooltip;
+                tooltipEl.textContent = tooltipText;
                 controlWrapper.appendChild(tooltipEl);
             }
             this.controlsContainer.appendChild(controlWrapper);
@@ -580,7 +645,6 @@ class BackgroundBuilder {
             let numValueStr = String(value).trim();
             let numValue = parseFloat(numValueStr);
 
-            // If input is empty and there's a default, use default
             if (numValueStr === '' && optionSchemaEntry.default !== undefined) {
                 numValue = parseFloat(optionSchemaEntry.default);
             }
@@ -589,26 +653,25 @@ class BackgroundBuilder {
                 const min = optionSchemaEntry.min !== undefined ? parseFloat(optionSchemaEntry.min) : -Infinity;
                 const max = optionSchemaEntry.max !== undefined ? parseFloat(optionSchemaEntry.max) : Infinity;
 
-                numValue = Math.max(min, Math.min(max, numValue)); // Clamp
+                numValue = Math.max(min, Math.min(max, numValue)); 
 
                 const schemaStep = parseFloat(optionSchemaEntry.step);
                 const isIntegerType = (Number.isInteger(schemaStep) && schemaStep >= 1) ||
-                                      (!isNaN(schemaStep) && schemaStep === 0) || // step 0 implies integer sometimes
+                                      (!isNaN(schemaStep) && schemaStep === 0) || 
                                       (optionSchemaEntry.step === undefined && String(numValue).indexOf('.') === -1);
 
                 if (isIntegerType) {
                     numValue = Math.round(numValue);
                 } else {
-                    numValue = parseFloat(numValue.toFixed(4)); // Round to 4 decimal places
+                    numValue = parseFloat(numValue.toFixed(4)); 
                 }
                 processedValue = numValue;
-            } else { // Value was not a parseable number (and not empty string handled above)
+            } else { 
                 console.warn(`[BackgroundBuilder.updateOption] Invalid number for key "${key}": "${value}". Reverting.`);
                 if (this.currentOptions.hasOwnProperty(key)) {
-                    processedValue = this.currentOptions[key]; // Revert to previously known good value
-                } else if (optionSchemaEntry.default !== undefined) { // Fallback to schema default
+                    processedValue = this.currentOptions[key]; 
+                } else if (optionSchemaEntry.default !== undefined) { 
                     processedValue = parseFloat(optionSchemaEntry.default);
-                     // Re-apply constraints to the default value
                     const min = optionSchemaEntry.min !== undefined ? parseFloat(optionSchemaEntry.min) : -Infinity;
                     const max = optionSchemaEntry.max !== undefined ? parseFloat(optionSchemaEntry.max) : Infinity;
                     processedValue = Math.max(min, Math.min(max, processedValue));
@@ -617,63 +680,54 @@ class BackgroundBuilder {
                     if (isIntegerTypeDefault) processedValue = Math.round(processedValue);
                     else processedValue = parseFloat(processedValue.toFixed(4));
                 } else {
-                    return; // Cannot determine a valid value, abort update for this key
+                    return; 
                 }
             }
         } else if (optionSchemaEntry && optionSchemaEntry.type === 'text' && Array.isArray(bgInfoForSchema?.defaults?.[key])) {
-            // Handle conversion of comma-separated string to array for relevant text inputs (e.g. color lists)
             if (typeof value === 'string') {
                 try {
                     const parsedArray = value.split(',').map(s => s.trim()).filter(s => s);
-                    // Use parsed array if it's not empty. If input string was empty, use empty array.
-                    // If input string was non-empty but resulted in empty array (e.g. only commas), could keep original string or empty array.
                     processedValue = (value.trim() === '') ? [] : (parsedArray.length > 0 ? parsedArray : value);
                 } catch (e) { /* value remains as string if parse fails */ }
             }
         }
-        // For boolean or other types, processedValue remains as original 'value' from parameter
 
         this.currentOptions[key] = processedValue;
 
-        // Update the input field in the UI to reflect the potentially clamped/rounded value
         const inputElement = document.getElementById(`ctrl-${key}`);
-        if (inputElement && inputElement.value !== String(processedValue)) { // Avoid redundant updates/cursor jumps
+        if (inputElement && inputElement.value !== String(processedValue)) { 
             if (optionSchemaEntry && optionSchemaEntry.type === 'boolean' && inputElement instanceof HTMLInputElement) {
                 inputElement.checked = !!processedValue;
-            } else if (inputElement.value !== undefined){ // Check for HTML elements that have a .value property
+            } else if (inputElement.value !== undefined){ 
                inputElement.value = String(processedValue);
             }
         }
 
-        // Dispatch event for external listeners (e.g., URL updater)
         const event = new CustomEvent('backgroundOptionChanged', {
             detail: { effectName: this.currentBackgroundType, options: { ...this.currentOptions } }
         });
         document.dispatchEvent(event);
 
         const bgInfo = this.registeredBackgrounds[this.currentBackgroundType];
-        if (!bgInfo) return; // Should not happen if currentBackgroundType is set
+        if (!bgInfo) return; 
 
         let requiresRestart = optionSchemaEntry?.requiresRestart || false;
         let requiresResize = optionSchemaEntry?.requiresResize || false;
 
-        // Apply options to the current background instance
         if (this.currentBackgroundInstance && !requiresRestart && typeof this.currentBackgroundInstance.updateInternalOptions === 'function') {
             this.currentBackgroundInstance.updateInternalOptions({ [key]: processedValue });
             if (requiresResize && typeof this.currentBackgroundInstance.resize === 'function') {
                 this.currentBackgroundInstance.resize();
             }
-            // If not animating, draw to reflect static changes
             if (!this.currentBackgroundInstance.animationId && typeof this.currentBackgroundInstance.draw === 'function') {
                 this.currentBackgroundInstance.draw();
             }
-        } else { // Full restart needed
+        } else { 
             if (this.currentBackgroundInstance) {
                 if (typeof this.currentBackgroundInstance.destroy === 'function') this.currentBackgroundInstance.destroy();
                 else if (typeof this.currentBackgroundInstance.stop === 'function') this.currentBackgroundInstance.stop();
             }
             try {
-                 // Ensure canvas has dimensions before re-instantiating
                 if (this.previewCanvas && (this.previewCanvas.width === 0 || this.previewCanvas.height === 0)) {
                      const parentEl = this.previewCanvas.parentElement;
                      if (parentEl) {
@@ -688,7 +742,10 @@ class BackgroundBuilder {
                 else if (typeof this.currentBackgroundInstance.draw === 'function') this.currentBackgroundInstance.draw();
             } catch (e) {
                 console.error(`[BackgroundBuilder.updateOption] Error re-instantiating ${bgInfo.className}:`, e);
-                if(this.controlsContainer) this.controlsContainer.innerHTML = `<p class="placeholder-text error-text">Error updating module '${this.currentBackgroundType}'. Check console.</p>`;
+                if(this.controlsContainer) {
+                    const errorMsgTemplate = this.translations.errorUpdatingModule || "Error updating module '%NAME%'. Check console.";
+                    this.controlsContainer.innerHTML = `<p class="placeholder-text error-text">${errorMsgTemplate.replace('%NAME%', this.currentBackgroundType || 'unknown')}</p>`;
+                }
                 this.currentBackgroundInstance = null;
             }
         }
@@ -710,14 +767,13 @@ class BackgroundBuilder {
         if (this.ctx && this.previewCanvas && this.previewCanvas.width > 0 && this.previewCanvas.height > 0) {
             this.ctx.clearRect(0, 0, this.previewCanvas.width, this.previewCanvas.height);
         }
-        if (this.controlsContainer) { // Reset controls panel
-            this.controlsContainer.innerHTML = '<p class="placeholder-text">Awaiting effect module selection...</p>';
+        if (this.controlsContainer) { 
+            this.controlsContainer.innerHTML = `<p class="placeholder-text">${this.translations.controlsPlaceholderText || 'Awaiting effect module selection...'}</p>`;
         }
         
-        // Clear code output in modal
         const codeOutputModalElem = document.getElementById('code-output-modal');
         if (codeOutputModalElem) {
-            codeOutputModalElem.textContent = "// Select a module and customize it first.";
+            codeOutputModalElem.textContent = this.translations.codeOutputModalSelectModuleFirst || "// Select a module and customize it first.";
         }
     }
 
@@ -733,40 +789,34 @@ class BackgroundBuilder {
 
         if (!this.valid || !codeOutputElem) {
             console.warn('[BackgroundBuilder.generateCodeSnippet] Builder not valid or code output modal element missing.');
-            if (codeOutputElem) codeOutputElem.textContent = "// ERROR: System integrity compromised. Code generation offline.";
+            if (codeOutputElem) codeOutputElem.textContent = this.translations.codeOutputModalSystemError || "// ERROR: System integrity compromised. Code generation offline.";
             return;
         }
 
         if (!this.currentBackgroundType || !this.currentBackgroundInstance) {
-            codeOutputElem.textContent = "// No active module. Engage a module and calibrate parameters to extract code sequence.";
+            codeOutputElem.textContent = this.translations.codeOutputModalNoActiveModule || "// No active module. Engage a module and calibrate parameters to extract code sequence.";
             return;
         }
 
         const bgInfo = this.registeredBackgrounds[this.currentBackgroundType];
         const className = bgInfo.className;
-        // Simplified filename generation, assuming class name is camelCase or PascalCase
         const classFileName = className.charAt(0).toLowerCase() + className.slice(1).replace(/[^a-zA-Z0-9_]/g, '') + '.js';
-        // Adjust this path if your file structure is different or served from a different base
         const classFilePath = `src/backgrounds/${classFileName}`; 
-        const suggestedImportPath = `js/backgrounds/${classFileName}`; // Common import path style
+        const suggestedImportPath = `js/backgrounds/${classFileName}`; 
 
         console.log(`[BackgroundBuilder.generateCodeSnippet] Generating for: ${className}. Attempting to fetch from: ${classFilePath}`);
 
         let classFileContent = `// --- ${className} class content could not be fetched. ---\n// --- Verify file at '${classFilePath}' is accessible and correctly exported. ---\nclass ${className} { constructor(c,o){console.error("${className} class definition not loaded.");} start(){} draw(){} resize(){} destroy(){} updateInternalOptions(o){} getDefaults(){return{};} }`;
 
         try {
-            // Attempt to fetch the class file content.
-            // NOTE: This fetch path is relative to where the main HTML file is served.
-            // Ensure your development server can serve files from this path.
-            const response = await fetch(classFilePath); // Path might need adjustment based on server root
+            const response = await fetch(classFilePath); 
             if (response.ok) {
                 classFileContent = await response.text();
-                // Remove common ES module export statements to make the class self-contained for the snippet
                 classFileContent = classFileContent.replace(/^export\s+default\s+[A-Za-z0-9_]+;*/gm, '').trim();
                 classFileContent = classFileContent.replace(/^export\s*{\s*([A-Za-z0-9_]+(\s*as\s*default)?\s*,?\s*)*\s*};*/gm, '').trim();
-                classFileContent = classFileContent.replace(/^export\s+(class|function|const|let|var)\s+/gm, '$1 '); // `export class Foo` -> `class Foo`
+                classFileContent = classFileContent.replace(/^export\s+(class|function|const|let|var)\s+/gm, '$1 '); 
                 
-                if (classFileContent.trim() === "") { // If stripping exports left nothing
+                if (classFileContent.trim() === "") { 
                     classFileContent = `// --- ${className} class content empty after processing exports. Check source: ${classFilePath} ---\nclass ${className} { constructor(c,o){console.error("Empty class definition: ${className}");} start(){} draw(){} resize(){} destroy(){} updateInternalOptions(o){} getDefaults(){return{};} }`;
                 }
             } else {
@@ -778,11 +828,9 @@ class BackgroundBuilder {
 
         const serializableOptions = {};
         const defaultOptsForType = bgInfo.defaults || {};
-        // Include only options that differ from default, or are booleans (to ensure they are explicit)
-        // or are not present in defaults (custom additions not in manifest perhaps)
         for (const key in this.currentOptions) {
             if (Object.prototype.hasOwnProperty.call(this.currentOptions, key)) {
-                if (typeof this.currentOptions[key] !== 'function') { // Exclude functions
+                if (typeof this.currentOptions[key] !== 'function') { 
                     let isDefaultValue = JSON.stringify(this.currentOptions[key]) === JSON.stringify(defaultOptsForType[key]);
                     if (!isDefaultValue || typeof this.currentOptions[key] === 'boolean' || !Object.prototype.hasOwnProperty.call(defaultOptsForType,key) ) {
                         serializableOptions[key] = this.currentOptions[key];
@@ -842,7 +890,6 @@ function initialize${className}Effect() {
 
     if (!canvasElement) {
         console.error("CRITICAL: Canvas element '" + canvasId + "' not found in the DOM. Effect cannot start.");
-        // Optionally, display a user-friendly message on the page.
         return;
     }
 
@@ -851,10 +898,8 @@ function initialize${className}Effect() {
         return;
     }
 
-    // User-configured options (only non-default values are typically included here for brevity)
     const effectOptions = ${optionsString};
     
-    // Ensure canvas has dimensions before effect instantiation, using its offsetWidth/Height or window fallback
     canvasElement.width = canvasElement.offsetWidth || window.innerWidth;
     canvasElement.height = canvasElement.offsetHeight || window.innerHeight;
 
@@ -863,23 +908,19 @@ function initialize${className}Effect() {
         backgroundEffectInstance = new ${className}(canvasElement, effectOptions);
     } catch (error) {
         console.error("Error during instantiation of ${className}:", error);
-        // Provide feedback to the user if instantiation fails.
         return;
     }
 
-    // Start the effect
     if (backgroundEffectInstance && typeof backgroundEffectInstance.start === 'function') {
         backgroundEffectInstance.start();
     } else if (backgroundEffectInstance && typeof backgroundEffectInstance.draw === 'function') {
-        // For effects that are not continuously animated but need an initial draw
         backgroundEffectInstance.draw(); 
     } else {
         console.warn("${className} instance was created but does not have a start() or draw() method.");
     }
 
-    // Make the canvas responsive to window resizing
     window.addEventListener('resize', () => {
-        if (!canvasElement || !backgroundEffectInstance) return; // Safety check
+        if (!canvasElement || !backgroundEffectInstance) return; 
         
         canvasElement.width = canvasElement.offsetWidth || window.innerWidth;
         canvasElement.height = canvasElement.offsetHeight || window.innerHeight;
@@ -887,7 +928,6 @@ function initialize${className}Effect() {
         if (typeof backgroundEffectInstance.resize === 'function') {
             backgroundEffectInstance.resize();
         }
-        // For static effects, redraw on resize if it's not actively animating
         if (backgroundEffectInstance.animationId === null && typeof backgroundEffectInstance.draw === 'function') {
             backgroundEffectInstance.draw();
         }
@@ -895,11 +935,9 @@ function initialize${className}Effect() {
     console.log("${className} effect initialization sequence deployed successfully.");
 }
 
-// Initialize the effect once the DOM is fully loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initialize${className}Effect);
 } else {
-    // DOMContentLoaded has already fired
     initialize${className}Effect();
 }
 // =============================================================================
@@ -917,7 +955,7 @@ if (document.readyState === 'loading') {
      */
     async copySnippetToClipboard() {
         const codeOutputElem = document.getElementById('code-output-modal');
-        const copyButtonElem = document.getElementById('copy-code-modal-button'); // Specific to modal
+        const copyButtonElem = document.getElementById('copy-code-modal-button'); 
         const copyStatusTextElem = copyButtonElem ? copyButtonElem.querySelector('.copy-status-text-modal') : null;
 
         if (!this.valid || !codeOutputElem || !copyButtonElem || !copyStatusTextElem) {
@@ -926,10 +964,26 @@ if (document.readyState === 'loading') {
         }
 
         const textToCopy = codeOutputElem.textContent;
-        const originalButtonText = copyStatusTextElem.textContent; // Assuming default is "Copy Sequence" or similar
+        
+        // Get the original "Copy Sequence" text in the current language
+        const originalButtonTextKey = 'copySequenceButtonText';
+        const originalButtonText = (this.translations && this.translations[originalButtonTextKey]) 
+                                   ? this.translations[originalButtonTextKey] 
+                                   : (copyStatusTextElem.dataset.defaultText || 'Copy Sequence'); // Fallback or data-attribute
+        if (!copyStatusTextElem.dataset.defaultText) { // Store default if not already for reset
+            copyStatusTextElem.dataset.defaultText = originalButtonText;
+        }
 
-        if (!textToCopy || textToCopy.startsWith("// No active module") || textToCopy.startsWith("// ERROR:")) {
-            copyStatusTextElem.textContent = 'No Code!';
+
+        const noCodeKey = 'codeOutputModalNoActiveModule'; // Or a more generic "no code to copy" key
+        const errorKey = 'codeOutputModalSystemError'; // Or a generic "error code" key
+
+        const noCodeText = (this.translations && this.translations[noCodeKey]) ? this.translations[noCodeKey] : "";
+        const errorText = (this.translations && this.translations[errorKey]) ? this.translations[errorKey] : "";
+
+        if (!textToCopy || textToCopy === noCodeText || textToCopy === errorText || textToCopy.startsWith("// No active module") || textToCopy.startsWith("// ERROR:")) {
+            const statusNoCodeKey = 'copyStatusNoCode';
+            copyStatusTextElem.textContent = (this.translations && this.translations[statusNoCodeKey]) ? this.translations[statusNoCodeKey] : 'No Code!';
             copyButtonElem.classList.add('error');
             setTimeout(() => {
                 copyStatusTextElem.textContent = originalButtonText;
@@ -940,9 +994,10 @@ if (document.readyState === 'loading') {
 
         try {
             await navigator.clipboard.writeText(textToCopy);
-            copyStatusTextElem.textContent = 'Sequence Copied!';
-            copyButtonElem.classList.remove('error'); // Ensure no error state
-            copyButtonElem.classList.add('copied'); // For styling feedback
+            const statusCopiedKey = 'copyStatusCopied';
+            copyStatusTextElem.textContent = (this.translations && this.translations[statusCopiedKey]) ? this.translations[statusCopiedKey] : 'Sequence Copied!';
+            copyButtonElem.classList.remove('error'); 
+            copyButtonElem.classList.add('copied'); 
             console.log('[BackgroundBuilder.copySnippetToClipboard] Code snippet copied from modal successfully.');
 
             setTimeout(() => {
@@ -951,18 +1006,18 @@ if (document.readyState === 'loading') {
             }, 2500);
         } catch (err) {
             console.error('[BackgroundBuilder.copySnippetToClipboard] Failed to copy using navigator.clipboard API: ', err);
-            copyStatusTextElem.textContent = 'Copy Failed!';
+            const statusFailedKey = 'copyStatusFailed';
+            copyStatusTextElem.textContent = (this.translations && this.translations[statusFailedKey]) ? this.translations[statusFailedKey] : 'Copy Failed!';
             copyButtonElem.classList.add('error');
             copyButtonElem.classList.remove('copied');
              setTimeout(() => {
                 copyStatusTextElem.textContent = originalButtonText;
                 copyButtonElem.classList.remove('error');
             }, 2000);
-            // Fallback for older browsers or if permission is denied (less common now)
             try {
                 const textArea = document.createElement("textarea");
                 textArea.value = textToCopy;
-                Object.assign(textArea.style, { // Make it invisible
+                Object.assign(textArea.style, { 
                     position: "fixed", top: "-9999px", left: "-9999px",
                     width: "1px", height: "1px", opacity: 0
                 });
@@ -971,7 +1026,6 @@ if (document.readyState === 'loading') {
                 textArea.select();
                 document.execCommand('copy');
                 document.body.removeChild(textArea);
-                // UI feedback for fallback success already handled by primary try-catch structure
             } catch (execErr) {
                  console.error('[BackgroundBuilder.copySnippetToClipboard] Fallback execCommand copy also failed: ', execErr);
             }
@@ -1001,26 +1055,24 @@ if (document.readyState === 'loading') {
         }
 
         if (this.controlsContainer) {
-            this.controlsContainer.innerHTML = '<p class="placeholder-text">System Offline. Interface Terminated.</p>';
+            this.controlsContainer.innerHTML = `<p class="placeholder-text">${this.translations.controlsSystemOffline || 'System Offline. Interface Terminated.'}</p>`;
         }
         
         const codeOutputModalElem = document.getElementById('code-output-modal');
         if (codeOutputModalElem) {
-            codeOutputModalElem.textContent = '// System Offline. Code generation unavailable.';
+            codeOutputModalElem.textContent = this.translations.codeOutputModalSystemOffline || '// System Offline. Code generation unavailable.';
         }
 
-        // Clear the canvas
         if (this.ctx && this.previewCanvas) {
             this.ctx.clearRect(0, 0, this.previewCanvas.width, this.previewCanvas.height);
         }
         
-        // Nullify properties
         this.previewCanvas = null;
         this.ctx = null;
         this.controlsContainer = null;
         this.registeredBackgrounds = {};
         this.currentOptions = {};
-        this.valid = false; // Mark builder as no longer valid
+        this.valid = false; 
         console.log('[BackgroundBuilder.destroy] System shutdown and resource liberation complete.');
     }
 }
